@@ -5,32 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technical Due Diligence — Drafting Dan</title>
+    <!-- Fonts: Inter and Source Code Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;700&family=Bebas+Neue&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Source+Code+Pro:wght@400;600;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --bg: #0d0f0e;
-            --surface: #131614;
-            --surface-2: #1a1d1b;
-            --border: #2a2f2c;
-            --border-bright: #3d4540;
-            --ink: #e8ede9;
-            --ink-muted: #8a9690;
-            --ink-dim: #4a5550;
-            --accent: #00e87a;
-            --accent-dim: rgba(0, 232, 122, 0.12);
-            --warn: #f0b429;
-            --warn-dim: rgba(240, 180, 41, 0.12);
-            --red: #e85555;
-            --red-dim: rgba(232, 85, 85, 0.10);
-            --amber: #e8a020;
-            --amber-dim: rgba(232, 160, 32, 0.12);
-            --grid-line: rgba(42, 47, 44, 0.6);
-            --mono: 'IBM Plex Mono', monospace;
-            --sans: 'IBM Plex Sans', sans-serif;
-            --display: 'Bebas Neue', sans-serif;
+            --bg: #0f172a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-2: rgba(255, 255, 255, 0.05);
+            --border: rgba(56, 189, 248, 0.1);
+            --border-bright: rgba(56, 189, 248, 0.2);
+            --ink: #f8fafc;
+            --ink-muted: #94a3b8;
+            --ink-dim: #64748b;
+            --accent: #38bdf8;
+            --accent-dim: rgba(56, 189, 248, 0.1);
+            --warn: #fbbf24;
+            --warn-dim: rgba(251, 191, 36, 0.12);
+            --red: #f87171;
+            --red-dim: rgba(248, 113, 113, 0.10);
+            --amber: #fbbf24;
+            --amber-dim: rgba(251, 191, 36, 0.12);
+            --grid-line: rgba(56, 189, 248, 0.1);
+            --mono: 'Source Code Pro', monospace;
+            --sans: 'Inter', sans-serif;
+            --display: 'Source Code Pro', sans-serif;
         }
 
         *,
@@ -62,7 +64,7 @@
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.4;
+            /* opacity: 0.4; */
         }
 
         * {
@@ -971,11 +973,27 @@
 
 <body>
 
-    <nav>
-        <a href="https://www.draftingdan.com" class="nav-logo">// DRAFTING DAN</a>
-        <span class="nav-tag">TECHNICAL DUE DILIGENCE</span>
-        <a href="#dd-consult" class="nav-cta">REQUEST AUDIT</a>
-    </nav>
+    <header>
+        <nav class="container"
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 2rem;">
+            <div class="logo" style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700;">
+                <img src="/ddlogo-bw.png" alt="DraftingDan Logo" style="width: 2rem; height: 2rem;">
+                <a href="/" style="text-decoration: none; color: inherit;">Drafting<span class="text-accent"
+                        style="color: var(--accent);">Dan</span></a>
+            </div>
+            <div class="nav-links">
+                <a href="/#benefits"
+                    style="margin-left: 2rem; text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.3s;">Why
+                    Fractional?</a>
+                <a href="/#services"
+                    style="margin-left: 2rem; text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.3s;">Services</a>
+                <a href="/#about"
+                    style="margin-left: 2rem; text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.3s;">About</a>
+                <a href="/#contact" class="btn"
+                    style="margin-left: 2rem; padding: 0.5rem 1rem; font-size: 0.8rem; border: 2px solid var(--accent); color: var(--accent); text-decoration: none; display: inline-block;">Contact</a>
+            </div>
+        </nav>
+    </header>
 
     <div class="marquee-wrap">
         <div class="marquee-track">
@@ -1043,7 +1061,8 @@
                     revenue numbers are growing. But underneath: undocumented dependencies, a decade of accumulated
                     technical debt, a codebase that three engineers maintain and nobody else can read, and
                     infrastructure one failed server away from a critical outage. These risks are real, quantifiable —
-                    and discoverable before you sign.</p>
+                    and discoverable before you sign.
+                </p>
             </div>
             <div class="problem-cell">
                 <div class="cell-label">RISK CATEGORY 001</div>
@@ -1123,7 +1142,8 @@
                 <p>I conduct technical due diligence the way a structural engineer inspects a building before a sale:
                     <strong>systematically, independently, and with full documentation of findings.</strong> Not a
                     surface-level walkthrough — a load-bearing assessment of architecture, codebase quality,
-                    infrastructure, team, and operational risk.</p>
+                    infrastructure, team, and operational risk.
+                </p>
                 <p>My 25 years of enterprise web architecture experience means I know what healthy systems look like at
                     scale — and I recognize the patterns of systems that are quietly failing. My MBA gives me the
                     framework to translate technical findings into financial language: remediation cost estimates,
@@ -1371,7 +1391,8 @@
                     <strong>which means I've seen what good architecture looks like under production load, and I've also
                         seen what accumulated technical debt looks like from the inside.</strong> I know the difference
                     between a codebase that's mature and a codebase that's been held together with workarounds for three
-                    years. That distinction matters in a deal.</p>
+                    years. That distinction matters in a deal.
+                </p>
             </div>
 
             <div class="why-cell">
@@ -1414,7 +1435,8 @@
                 <h2>REQUEST A <span>TECHNICAL</span> AUDIT.</h2>
                 <p>The Rapid Flag Assessment is the right starting point for most deals — a fast, focused review that
                     tells you whether there are material technical deal-breakers before you invest in full diligence.
-                    <strong>Delivered in 5–7 days. Scoped to your timeline. NDA-protected.</strong></p>
+                    <strong>Delivered in 5–7 days. Scoped to your timeline. NDA-protected.</strong>
+                </p>
                 <p style="margin-top:12px">If you're already in the full diligence phase, the Full Technical Audit
                     delivers a complete risk register with cost-quantified findings ready for the deal model.</p>
                 <p class="cta-schema">// SCHEMA: request.type = "technical_due_diligence" → payload.destination =

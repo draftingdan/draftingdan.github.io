@@ -197,14 +197,48 @@ h6 {
 }
 
 .card {
+    background: transparent;
+    perspective: 1000px;
+    height: 300px;
+    /* Fixed height for consistency during flip */
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--grid-line);
     padding: 2rem;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.card-back {
+    transform: rotateY(180deg);
+    background: rgba(56, 189, 248, 0.05);
+    border-color: var(--accent-color);
+}
+
+.card:hover .card-inner {
     border-color: var(--accent-color);
 }
 
@@ -262,4 +296,37 @@ h6 {
 
 .service-item p {
     color: var(--text-secondary);
+}
+
+/* CONTACT SECTION */
+.contact-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.contact-sep {
+    color: var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+    .contact-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .contact-sep {
+        width: 30px;
+        height: 1px;
+        background: var(--accent-color);
+        display: block;
+        color: transparent;
+        overflow: hidden;
+    }
 }

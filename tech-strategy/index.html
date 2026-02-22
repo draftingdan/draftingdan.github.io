@@ -5,33 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Strategy — Drafting Dan</title>
+    <!-- Fonts: Inter and Source Code Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;700&family=Bebas+Neue&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Source+Code+Pro:wght@400;600;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --bg: #0d0f0e;
-            --surface: #131614;
-            --surface-2: #1a1d1b;
-            --border: #2a2f2c;
-            --border-bright: #3d4540;
-            --ink: #e8ede9;
-            --ink-muted: #8a9690;
-            --ink-dim: #4a5550;
-            --accent: #00e87a;
-            --accent-dim: rgba(0, 232, 122, 0.12);
-            --accent-mid: rgba(0, 232, 122, 0.25);
-            --warn: #f0b429;
-            --warn-dim: rgba(240, 180, 41, 0.12);
-            --red: #e85555;
-            --red-dim: rgba(232, 85, 85, 0.10);
-            --blue: #5599ff;
-            --blue-dim: rgba(85, 153, 255, 0.10);
-            --grid-line: rgba(42, 47, 44, 0.6);
-            --mono: 'IBM Plex Mono', monospace;
-            --sans: 'IBM Plex Sans', sans-serif;
-            --display: 'Bebas Neue', sans-serif;
+            --bg: #0f172a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-2: rgba(255, 255, 255, 0.05);
+            --border: rgba(56, 189, 248, 0.1);
+            --border-bright: rgba(56, 189, 248, 0.2);
+            --ink: #f8fafc;
+            --ink-muted: #94a3b8;
+            --ink-dim: #64748b;
+            --accent: #38bdf8;
+            --accent-dim: rgba(56, 189, 248, 0.1);
+            --accent-mid: rgba(56, 189, 248, 0.2);
+            --warn: #fbbf24;
+            --warn-dim: rgba(251, 191, 36, 0.12);
+            --red: #f87171;
+            --red-dim: rgba(248, 113, 113, 0.10);
+            --blue: #38bdf8;
+            --blue-dim: rgba(56, 189, 248, 0.10);
+            --grid-line: rgba(56, 189, 248, 0.1);
+            --mono: 'Source Code Pro', monospace;
+            --sans: 'Inter', sans-serif;
+            --display: 'Source Code Pro', sans-serif;
         }
 
         *,
@@ -65,7 +67,7 @@
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.4;
+            /* opacity: 0.4; */
         }
 
         * {
@@ -976,11 +978,27 @@
 
 <body>
 
-    <nav>
-        <a href="https://www.draftingdan.com" class="nav-logo">// DRAFTING DAN</a>
-        <span class="nav-tag">TECH STRATEGY & ROADMAPPING</span>
-        <a href="#consult" class="nav-cta">REQUEST CONSULT</a>
-    </nav>
+    <header>
+        <nav class="container"
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 2rem;">
+            <div class="logo" style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700;">
+                <img src="/ddlogo-bw.png" alt="DraftingDan Logo" style="width: 2rem; height: 2rem;">
+                <a href="/" style="text-decoration: none; color: inherit;">Drafting<span class="text-accent"
+                        style="color: var(--accent);">Dan</span></a>
+            </div>
+            <div class="nav-links">
+                <a href="/#benefits"
+                    style="margin-left: 2rem; text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.3s;">Why
+                    Fractional?</a>
+                <a href="/#services"
+                    style="margin-left: 2rem; text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.3s;">Services</a>
+                <a href="/#about"
+                    style="margin-left: 2rem; text-decoration: none; color: var(--ink-muted); font-size: 0.9rem; transition: color 0.3s;">About</a>
+                <a href="/#contact" class="btn"
+                    style="margin-left: 2rem; padding: 0.5rem 1rem; font-size: 0.8rem; border: 2px solid var(--accent); color: var(--accent); text-decoration: none; display: inline-block;">Contact</a>
+            </div>
+        </nav>
+    </header>
 
     <div class="marquee-wrap">
         <div class="marquee-track">
