@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Building — Drafting Dan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0f0e;
+            --surface: #131614;
+            --surface-2: #1a1d1b;
+            --border: #2a2f2c;
+            --border-bright: #3d4540;
+            --ink: #e8ede9;
+            --ink-muted: #8a9690;
+            --ink-dim: #4a5550;
+            --accent: #00e87a;
+            --accent-dim: rgba(0, 232, 122, 0.12);
+            --accent-mid: rgba(0, 232, 122, 0.25);
+            --warn: #f0b429;
+            --warn-dim: rgba(240, 180, 41, 0.12);
+            --red: #e85555;
+            --red-dim: rgba(232, 85, 85, 0.10);
+            --teal: #00c8b8;
+            --teal-dim: rgba(0, 200, 184, 0.10);
+            --grid-line: rgba(42, 47, 44, 0.6);
+            --mono: 'IBM Plex Mono', monospace;
+            --sans: 'IBM Plex Sans', sans-serif;
+            --display: 'Bebas Neue', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        * {
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13, 15, 14, 0.95);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            text-decoration: none;
+        }
+
+        .nav-tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-cta {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--bg);
+            background: var(--accent);
+            padding: 8px 18px;
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            transition: opacity 0.2s;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.85;
+        }
+
+        .marquee-wrap {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            padding: 12px 0;
+            background: var(--surface);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            animation: marquee 28s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .marquee-item span {
+            color: var(--accent);
+            margin-right: 60px;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .hero {
+            padding: 100px 40px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero-headline {
+            font-family: var(--display);
+            font-size: clamp(72px, 10vw, 130px);
+            line-height: 0.92;
+            letter-spacing: 0.01em;
+            color: var(--ink);
+            margin-bottom: 32px;
+        }
+
+        .hero-headline .accent-line {
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--ink-muted);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .hero-sub strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .hero-data-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid var(--border);
+            max-width: 640px;
+        }
+
+        .hero-stat {
+            padding: 20px 24px;
+            border-right: 1px solid var(--border);
+        }
+
+        .hero-stat:last-child {
+            border-right: none;
+        }
+
+        .hero-stat-val {
+            font-family: var(--display);
+            font-size: 40px;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .hero-stat-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 48px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            font-family: var(--display);
+            font-size: clamp(36px, 5vw, 64px);
+            letter-spacing: 0.02em;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .section-num {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            position: absolute;
+            right: 0;
+            bottom: 20px;
+        }
+
+        .rule {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .problem-cell {
+            background: var(--surface);
+            padding: 32px;
+        }
+
+        .problem-cell.full-width {
+            grid-column: span 2;
+        }
+
+        .cell-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .problem-cell h3 {
+            font-family: var(--mono);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--warn);
+            margin-bottom: 12px;
+        }
+
+        .problem-cell p {
+            font-size: 14px;
+            color: var(--ink-muted);
+            line-height: 1.7;
+        }
+
+        .problem-cell p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .callout-block {
+            background: var(--teal-dim);
+            border-left: 3px solid var(--teal);
+            padding: 24px 28px;
+        }
+
+        .callout-block p {
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        .callout-block strong {
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .fault-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fault-item {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 12px;
+            align-items: start;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .fault-index {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            padding-top: 3px;
+        }
+
+        .fault-text {
+            font-size: 14px;
+            color: var(--ink-muted);
+        }
+
+        .fault-text strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .solution-intro {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: start;
+            margin-bottom: 60px;
+        }
+
+        .solution-intro-text h3 {
+            font-family: var(--display);
+            font-size: 42px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .solution-intro-text p {
+            font-size: 15px;
+            color: var(--ink-muted);
+            line-height: 1.75;
+            margin-bottom: 16px;
+        }
+
+        .solution-intro-text p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* org chart visual */
+        .org-diagram {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 24px;
+        }
+
+        .diagram-header {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .org-level {
+            margin-bottom: 8px;
+        }
+
+        .org-level-label {
+            font-family: var(--mono);
+            font-size: 9px;
+            color: var(--ink-dim);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .org-nodes {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .org-node {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .org-node.filled {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .org-node.gap {
+            border-color: var(--warn);
+            background: var(--warn-dim);
+        }
+
+        .org-node-role {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .org-node-val {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink);
+        }
+
+        .org-node.filled .org-node-val {
+            color: var(--accent);
+        }
+
+        .org-node.gap .org-node-val {
+            color: var(--warn);
+        }
+
+        .org-connector {
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--border-bright);
+            margin: 2px 0;
+        }
+
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .spec-cell {
+            background: var(--surface);
+            padding: 24px;
+        }
+
+        .spec-cell-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .spec-cell-val {
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--accent);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .spec-cell-desc {
+            font-size: 12px;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+
+        .packages-table {
+            border: 1px solid var(--border);
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--mono);
+        }
+
+        .packages-thead th {
+            background: var(--surface-2);
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .packages-thead th:last-child {
+            border-right: none;
+        }
+
+        .pkg-row {
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .pkg-row:last-child {
+            border-bottom: none;
+        }
+
+        .pkg-cell {
+            padding: 24px 20px;
+            border-right: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .pkg-cell:last-child {
+            border-right: none;
+        }
+
+        .pkg-id {
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .pkg-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .pkg-subtitle {
+            font-size: 10px;
+            color: var(--ink-muted);
+            font-family: var(--sans);
+            letter-spacing: 0.04em;
+        }
+
+        .pkg-deliverable {
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-family: var(--sans);
+            line-height: 1.6;
+        }
+
+        .pkg-deliverable ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pkg-deliverable li {
+            padding: 4px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .pkg-deliverable li::before {
+            content: '→';
+            color: var(--accent);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .pkg-scope {
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-family: var(--sans);
+        }
+
+        .pkg-outcome {
+            font-size: 12px;
+            color: var(--ink);
+            font-family: var(--sans);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .badge-tier {
+            display: inline-block;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            padding: 3px 8px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .badge-audit {
+            background: var(--warn-dim);
+            color: var(--warn);
+            border: 1px solid var(--warn);
+        }
+
+        .badge-build {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .badge-partner {
+            background: rgba(120, 100, 255, 0.12);
+            color: #9d8fff;
+            border: 1px solid #9d8fff;
+        }
+
+        .pkg-row.highlight-row .pkg-cell {
+            background: var(--accent-dim);
+        }
+
+        .pkg-row.highlight-row .pkg-name {
+            color: var(--accent);
+        }
+
+        .why-dan-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 48px;
+        }
+
+        .why-cell {
+            background: var(--surface);
+            padding: 32px;
+        }
+
+        .why-cell.wide {
+            grid-column: span 2;
+            background: var(--surface-2);
+        }
+
+        .why-cell h3 {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            letter-spacing: 0.04em;
+        }
+
+        .why-cell p {
+            font-size: 14px;
+            color: var(--ink-muted);
+            line-height: 1.7;
+        }
+
+        .why-cell p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .why-cell.wide blockquote {
+            font-family: var(--display);
+            font-size: clamp(28px, 4vw, 48px);
+            color: var(--ink);
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+        }
+
+        .why-cell.wide blockquote span {
+            color: var(--accent);
+        }
+
+        .credentials-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .credentials-list li {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--ink-muted);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+
+        .credentials-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cred-key {
+            color: var(--ink-dim);
+            width: 160px;
+            flex-shrink: 0;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .cta-section {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 64px 48px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .cta-section h2 {
+            font-family: var(--display);
+            font-size: clamp(40px, 5vw, 72px);
+            color: var(--ink);
+            line-height: 1;
+            letter-spacing: 0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-section h2 span {
+            color: var(--accent);
+        }
+
+        .cta-section p {
+            font-size: 15px;
+            color: var(--ink-muted);
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        .cta-section p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .cta-schema {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.06em;
+            margin-top: 20px;
+        }
+
+        .cta-block {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--bg);
+            background: var(--accent);
+            padding: 16px 32px;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid var(--accent);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-secondary {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--ink);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-dim);
+            letter-spacing: 0.05em;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .container {
+                padding: 60px 20px;
+            }
+
+            .hero-headline {
+                font-size: 68px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-cell.full-width {
+                grid-column: span 1;
+            }
+
+            .solution-intro {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-specs {
+                grid-template-columns: 1fr;
+            }
+
+            .why-dan-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .why-cell.wide {
+                grid-column: span 1;
+            }
+
+            .cta-section {
+                grid-template-columns: 1fr;
+            }
+
+            .packages-table {
+                font-size: 11px;
+            }
+
+            .pkg-cell {
+                padding: 16px 12px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .hero-data-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stat {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .hero-stat:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="https://www.draftingdan.com" class="nav-logo">// DRAFTING DAN</a>
+        <span class="nav-tag">TEAM BUILDING & ENGINEERING LEADERSHIP</span>
+        <a href="#team-consult" class="nav-cta">REQUEST CONSULT</a>
+    </nav>
+
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span class="marquee-item">ENGINEERING TEAM DESIGN <span>◆</span></span>
+            <span class="marquee-item">TECHNICAL HIRING <span>◆</span></span>
+            <span class="marquee-item">MENTORSHIP &amp; GROWTH FRAMEWORKS <span>◆</span></span>
+            <span class="marquee-item">FRACTIONAL CTO <span>◆</span></span>
+            <span class="marquee-item">TEAM STRUCTURE AUDIT <span>◆</span></span>
+            <span class="marquee-item">ENGINEERING CULTURE <span>◆</span></span>
+            <span class="marquee-item">BLUEPRINTS FOR THE MODERN ENTERPRISE <span>◆</span></span>
+            <span class="marquee-item">ENGINEERING TEAM DESIGN <span>◆</span></span>
+            <span class="marquee-item">TECHNICAL HIRING <span>◆</span></span>
+            <span class="marquee-item">MENTORSHIP &amp; GROWTH FRAMEWORKS <span>◆</span></span>
+            <span class="marquee-item">FRACTIONAL CTO <span>◆</span></span>
+            <span class="marquee-item">TEAM STRUCTURE AUDIT <span>◆</span></span>
+            <span class="marquee-item">ENGINEERING CULTURE <span>◆</span></span>
+            <span class="marquee-item">BLUEPRINTS FOR THE MODERN ENTERPRISE <span>◆</span></span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <p class="hero-eyebrow fade-in">TEAM BUILDING — SERVICE SPEC v2025</p>
+        <h1 class="hero-headline fade-in delay-1">
+            YOUR TEAM IS<br>
+            <span class="accent-line">LOAD-BEARING</span>
+            STRUCTURE.
+        </h1>
+        <p class="hero-sub fade-in delay-2">
+            You can have the best architecture in the industry. If the team running it is misaligned, understaffed, or
+            poorly structured, <strong>the whole thing fails under load.</strong> Building an engineering team isn't an
+            HR function. It's a structural engineering problem — and it requires the same rigor.
+        </p>
+        <div class="hero-data-strip fade-in delay-3">
+            <div class="hero-stat">
+                <div class="hero-stat-val">25</div>
+                <div class="hero-stat-label">Years Building & Leading Teams</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-val">15</div>
+                <div class="hero-stat-label">Years Enterprise Engineering Mgmt</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-val">MBA</div>
+                <div class="hero-stat-label">IT Management + Leadership</div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 01</span>
+            <h2 class="section-title">THE STRUCTURAL GAPS</h2>
+            <span class="section-num">TEAM FAULT ANALYSIS</span>
+        </div>
+
+        <div class="problem-grid">
+            <div class="problem-cell full-width">
+                <div class="cell-label">ASSESSMENT</div>
+                <p>A bridge doesn't fail because the steel was bad. It fails because the load was miscalculated, the
+                    inspection was skipped, or the wrong person was hired to manage the site. <strong>Engineering teams
+                        fail for the same reasons.</strong> Wrong roles hired into the wrong structure. Senior engineers
+                    carrying workloads that should be distributed. Juniors dropped into production environments with no
+                    mentorship scaffold. Leaders promoted because they were great individual contributors — not because
+                    they were built to lead. The team holds together until it doesn't.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">FAULT TYPE 001</div>
+                <h3>⚠ STRUCTURAL MISALIGNMENT</h3>
+                <p>Roles aren't matched to the actual workload. You hired for what you needed two years ago. The system
+                    has grown; the org chart hasn't. Overloaded seniors are doing junior work. Critical gaps are covered
+                    by whoever is available rather than whoever is right.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">FAULT TYPE 002</div>
+                <h3>⚠ HIRING WITHOUT SPECIFICATION</h3>
+                <p>Job descriptions are recycled from old postings or copied from competitors. Interviews test for the
+                    wrong skills. Candidates are evaluated on general capability, not on fit to your specific
+                    architecture, culture, and growth stage. The wrong hire is a costly repair job.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">FAULT TYPE 003</div>
+                <h3>⚠ NO MENTORSHIP FRAMEWORK</h3>
+                <p>Mid-level engineers plateau because nobody has defined what senior looks like. Juniors churn because
+                    onboarding is unstructured and support is inconsistent. Institutional knowledge lives in one
+                    person's head and walks out the door when they leave.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">FAULT TYPE 004</div>
+                <h3>⚠ ACCIDENTAL LEADERSHIP</h3>
+                <p>Your best engineer got promoted to lead. They're drowning in people management they were never
+                    prepared for, and now you've lost both a strong IC and gained a struggling manager. Leadership is a
+                    separate skill set — and it requires its own development plan.</p>
+            </div>
+            <div class="problem-cell full-width callout-block">
+                <p><strong>A team isn't a headcount. It's a system.</strong> Every role is a component with defined
+                    inputs, outputs, and load capacity. When those aren't specified, the team runs on hope and overtime
+                    — and neither scales.</p>
+            </div>
+        </div>
+
+        <div class="fault-list">
+            <div class="fault-item">
+                <span class="fault-index">F.01</span>
+                <p class="fault-text"><strong>No defined role specifications.</strong> Responsibilities overlap, gaps
+                    exist, and accountability is unclear. When something breaks, nobody owns it — or everybody does.</p>
+            </div>
+            <div class="fault-item">
+                <span class="fault-index">F.02</span>
+                <p class="fault-text"><strong>Hiring criteria disconnected from architecture needs.</strong> The team
+                    grows in headcount but not in the right capabilities. Skills gaps in critical areas persist
+                    regardless of hiring volume.</p>
+            </div>
+            <div class="fault-item">
+                <span class="fault-index">F.03</span>
+                <p class="fault-text"><strong>No structured career progression framework.</strong> High performers leave
+                    because growth is opaque. There's no documented path from junior to senior to lead — just informal
+                    vibes and occasional promotions.</p>
+            </div>
+            <div class="fault-item">
+                <span class="fault-index">F.04</span>
+                <p class="fault-text"><strong>Culture drift under growth pressure.</strong> The values that made the
+                    early team effective get diluted as headcount scales. No onboarding schema means every new hire
+                    inherits a different version of the culture.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 02</span>
+            <h2 class="section-title">THE TEAM BLUEPRINT</h2>
+            <span class="section-num">METHODOLOGY SPEC</span>
+        </div>
+
+        <div class="solution-intro">
+            <div class="solution-intro-text">
+                <h3>TEAMS DESIGNED TO SPEC</h3>
+                <p>I approach team building the way a structural engineer approaches a load plan: <strong>survey what
+                        you have, calculate what you need, specify what fills the gap, and document the whole
+                        thing.</strong> No guesswork. No "culture fit" as a substitute for structured evaluation.</p>
+                <p>Over 25 years I've built, mentored, and restructured engineering teams at every scale — from a
+                    two-person startup pairing to multi-team enterprise organizations. I've hired engineers, managed
+                    managers, and stepped into fractional leadership roles where teams needed guidance during
+                    transitions, growth phases, or leadership gaps.</p>
+                <p>My MBA gives me the framework to connect team structure to business outcomes — headcount planning,
+                    budget constraints, velocity targets. My engineering background means I can evaluate technical skill
+                    at the architecture level, not just the résumé level. <strong>I know what a senior engineer actually
+                        looks like in production — and I know the difference between someone who interviews well and
+                        someone who ships.</strong></p>
+                <p>The output is a team architecture document: org structure, role specifications, hiring criteria,
+                    mentorship frameworks, and a growth plan — built for your actual stage, not a generic best practice
+                    template.</p>
+            </div>
+
+            <div class="org-diagram">
+                <div class="diagram-header">// TEAM STRUCTURE AUDIT — SAMPLE OUTPUT</div>
+
+                <div class="org-level">
+                    <div class="org-level-label">L1 — LEADERSHIP</div>
+                    <div class="org-nodes">
+                        <div class="org-node filled">
+                            <div class="org-node-role">ENG. LEAD</div>
+                            <div class="org-node-val">FILLED</div>
+                        </div>
+                        <div class="org-node gap">
+                            <div class="org-node-role">TECH LEAD</div>
+                            <div class="org-node-val">GAP ⚠</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="org-connector">│</div>
+                <div class="org-level">
+                    <div class="org-level-label">L2 — SENIOR</div>
+                    <div class="org-nodes">
+                        <div class="org-node filled">
+                            <div class="org-node-role">SR. BACKEND</div>
+                            <div class="org-node-val">FILLED</div>
+                        </div>
+                        <div class="org-node gap">
+                            <div class="org-node-role">SR. FRONTEND</div>
+                            <div class="org-node-val">GAP ⚠</div>
+                        </div>
+                        <div class="org-node filled">
+                            <div class="org-node-role">SR. DATA</div>
+                            <div class="org-node-val">FILLED</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="org-connector">│</div>
+                <div class="org-level">
+                    <div class="org-level-label">L3 — MID / JUNIOR</div>
+                    <div class="org-nodes">
+                        <div class="org-node filled">
+                            <div class="org-node-role">MID ENG.</div>
+                            <div class="org-node-val">×3 FILLED</div>
+                        </div>
+                        <div class="org-node gap">
+                            <div class="org-node-role">JR. ENG.</div>
+                            <div class="org-node-val">OVER-LOAD ⚠</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border);">
+                    <div
+                        style="font-family:var(--mono); font-size:10px; color:var(--ink-dim); margin-bottom:6px; letter-spacing:0.08em; text-transform:uppercase;">
+                        STRUCTURAL FINDING</div>
+                    <div style="font-family:var(--mono); font-size:11px; color:var(--warn);">2 critical gaps. 1 load
+                        imbalance identified.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-specs">
+            <div class="spec-cell">
+                <div class="spec-cell-label">ROLE SPECIFICATION</div>
+                <div class="spec-cell-val">DOCUMENTED TO SCHEMA</div>
+                <div class="spec-cell-desc">Every role gets a written spec: responsibilities, required skills, growth
+                    path, and success metrics. Not a job description — a structural component definition.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">HIRING CRITERIA</div>
+                <div class="spec-cell-val">ARCHITECTURE-MATCHED</div>
+                <div class="spec-cell-desc">Evaluation criteria are built from your actual stack and team gaps, not
+                    generic "strong communication skills" boilerplate. Interviews are structured, scored, and
+                    repeatable.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">MENTORSHIP FRAMEWORK</div>
+                <div class="spec-cell-val">STRUCTURED PATHWAYS</div>
+                <div class="spec-cell-desc">Career progression is documented and transparent. Junior-to-senior criteria
+                    are written and known. Growth doesn't depend on a manager remembering to advocate for someone.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">LOAD DISTRIBUTION</div>
+                <div class="spec-cell-val">BALANCED BY DESIGN</div>
+                <div class="spec-cell-desc">Workload is mapped to team capacity by role and seniority. Overloaded
+                    seniors and misallocated juniors are identified and corrected before they become attrition risks.
+                </div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">LEADERSHIP PIPELINE</div>
+                <div class="spec-cell-val">EXPLICIT, NOT ACCIDENTAL</div>
+                <div class="spec-cell-desc">Leadership development is treated as a parallel track to technical growth,
+                    not a reward for seniority. Candidates are identified and prepared — not surprised with a promotion.
+                </div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">CULTURE SCHEMA</div>
+                <div class="spec-cell-val">DEFINED + ONBOARDED</div>
+                <div class="spec-cell-desc">Culture is documented in behavioral terms, not values posters. Onboarding
+                    installs it systematically. New hires join the same team, regardless of when they join.</div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 03</span>
+            <h2 class="section-title">ENGAGEMENT BLUEPRINTS</h2>
+            <span class="section-num">SERVICE SPECIFICATIONS</span>
+        </div>
+
+        <table class="packages-table">
+            <thead class="packages-thead">
+                <tr>
+                    <th style="width:220px">PACKAGE</th>
+                    <th>DELIVERABLES</th>
+                    <th>SCOPE &amp; ENGAGEMENT</th>
+                    <th>STRUCTURAL OUTCOME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pkg-row">
+                    <td class="pkg-cell">
+                        <span class="pkg-id">TEAM-01</span>
+                        <span class="pkg-name">TEAM STRUCTURE AUDIT</span>
+                        <span class="pkg-subtitle">Org & Capacity Assessment</span>
+                        <div><span class="badge-tier badge-audit">DIAGNOSTIC</span></div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-deliverable">
+                            <ul>
+                                <li>Current team structure mapping</li>
+                                <li>Role definition & responsibility audit</li>
+                                <li>Capacity and workload distribution analysis</li>
+                                <li>Skills gap identification vs. architecture needs</li>
+                                <li>Leadership readiness assessment</li>
+                                <li>Written report with structural findings</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-scope">Fixed engagement. Remote interviews with team leads and key ICs, plus
+                            documentation review. Delivered in 5–7 business days.</div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-outcome">You have a clear picture of structural gaps, overload points, and
+                            hiring priorities — grounded in your actual architecture, not generic org chart templates.
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="pkg-row highlight-row">
+                    <td class="pkg-cell">
+                        <span class="pkg-id">TEAM-02</span>
+                        <span class="pkg-name">TEAM BUILD BLUEPRINT</span>
+                        <span class="pkg-subtitle">Hiring, Structure & Mentorship Design</span>
+                        <div><span class="badge-tier badge-build">BUILD</span></div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-deliverable">
+                            <ul>
+                                <li>Target org structure design</li>
+                                <li>Role specifications for all open and future positions</li>
+                                <li>Architecture-matched hiring criteria & interview process</li>
+                                <li>Mentorship & career progression framework</li>
+                                <li>Onboarding schema and culture document</li>
+                                <li>Candidate evaluation support (optional add-on)</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-scope">Project-based. Includes Team Structure Audit as intake. Total engagement:
+                            3–4 weeks. Deliverable is a governed team architecture document.</div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-outcome">You hire for the right roles with the right criteria. Growth paths are
+                            visible. Mentorship is structured. The team compounds in capability instead of churning
+                            talent.</div>
+                    </td>
+                </tr>
+
+                <tr class="pkg-row">
+                    <td class="pkg-cell">
+                        <span class="pkg-id">TEAM-03</span>
+                        <span class="pkg-name">FRACTIONAL ENG. LEADER</span>
+                        <span class="pkg-subtitle">Ongoing Team Leadership & Development</span>
+                        <div><span class="badge-tier badge-partner">PARTNERSHIP</span></div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-deliverable">
+                            <ul>
+                                <li>Ongoing 1:1 mentorship for senior engineers & leads</li>
+                                <li>Active participation in hiring decisions</li>
+                                <li>Engineering team health reviews (monthly)</li>
+                                <li>Culture and process governance</li>
+                                <li>Escalation path for team conflict or structural issues</li>
+                                <li>Quarterly team development report</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-scope">Monthly retainer. Minimum 3-month engagement. Structured as fractional
+                            engineering leadership — fills the gap between a VP of Eng and a direct manager without the
+                            full-time cost.</div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-outcome">Your team is actively developed, not passively managed. Senior
+                            engineers grow into leads. Leads grow into decision-makers. The organization scales without
+                            losing its structural integrity.</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 04</span>
+            <h2 class="section-title">WHY DAN?</h2>
+            <span class="section-num">CREDENTIALS SPEC</span>
+        </div>
+
+        <div class="why-dan-grid">
+            <div class="why-cell wide">
+                <blockquote>"The best team isn't the most talented.<br>It's the most <span>structurally sound.</span>"
+                </blockquote>
+            </div>
+
+            <div class="why-cell">
+                <h3>LED BEFORE CONSULTING</h3>
+                <p>I've held the seat I'm advising you on. Fifteen years of building and maintaining enterprise-scale
+                    systems means I've hired engineers, managed managers, navigated team conflict, and felt the personal
+                    cost of a mis-hire at a critical moment. <strong>My advice isn't theoretical — it's built from
+                        decisions made under real delivery pressure.</strong> I know what a high-functioning engineering
+                    team looks like from inside it, not from a case study.</p>
+            </div>
+
+            <div class="why-cell">
+                <h3>CREDENTIALS SCHEMA</h3>
+                <ul class="credentials-list">
+                    <li><span class="cred-key">EXPERIENCE</span> 25 years in technical leadership</li>
+                    <li><span class="cred-key">CIVIL ENG.</span> 10 years — site management & field crews</li>
+                    <li><span class="cred-key">WEB ARCH.</span> 15 years enterprise team leadership</li>
+                    <li><span class="cred-key">MBA</span> IT Management — org design & leadership</li>
+                    <li><span class="cred-key">MS (in prog.)</span> Software Engineering — AI Engineering</li>
+                    <li><span class="cred-key">APPROACH</span> Structured, documented, measurable</li>
+                </ul>
+            </div>
+
+            <div class="why-cell">
+                <h3>THE CIVIL ENGINEERING PARALLEL</h3>
+                <p>My first decade was spent managing field crews on civil engineering and land surveying sites —
+                    coordinating specialists, managing safety under pressure, and delivering precision work on hard
+                    deadlines. <strong>The skills that make a great site supervisor and a great engineering manager are
+                        structurally identical:</strong> clear role definition, explicit accountability, mentorship of
+                    juniors, and a relentless bias toward documented process over tribal knowledge.</p>
+            </div>
+
+            <div class="why-cell">
+                <h3>BUSINESS + TECHNICAL FLUENCY</h3>
+                <p>My MBA gives me the vocabulary to translate team investment into business outcomes — cost per hire,
+                    velocity impact, retention value, leadership leverage. Executives and boards need those numbers.
+                    Engineers need technical clarity and growth. <strong>I operate in both registers
+                        simultaneously</strong> — which means I can design a team structure that satisfies the CFO and
+                    retains your senior engineers. That combination is rarer than it should be.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container" id="team-consult">
+        <div class="cta-section">
+            <div>
+                <h2>START WITH A <span>TEAM</span> AUDIT.</h2>
+                <p>The Team Structure Audit is a fixed-scope diagnostic that maps your current org, identifies
+                    structural gaps and overload points, and delivers a prioritized set of findings. <strong>No retainer
+                        required. No obligation to proceed.</strong></p>
+                <p style="margin-top:12px">If your team is scaling, going through a leadership transition, or struggling
+                    to hire the right people — a structural audit is the right starting point.</p>
+                <p class="cta-schema">// SCHEMA: request.type = "team_audit" → payload.destination = "draftingdan.com"
+                </p>
+            </div>
+            <div class="cta-block">
+                <a href="mailto:inquiry@draftingdan.com" class="btn-primary">REQUEST CONSULT →</a>
+                <a href="/tech-strategy" class="btn-secondary">↗ VIEW TECH STRATEGY SERVICE</a>
+                <a href="mailto:daniel@draftingdan.com" class="btn-secondary">↗ EMAIL DAN DIRECTLY</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 <a href="https://www.draftingdan.com">DRAFTING DAN</a> — TEAM BUILDING &amp; ENGINEERING LEADERSHIP
+        </p>
+        <p>STRUCTURED. DOCUMENTED. BUILT TO SCALE.</p>
+    </footer>
+
+</body>
+
+</html>

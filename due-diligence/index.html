@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Due Diligence — Drafting Dan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0f0e;
+            --surface: #131614;
+            --surface-2: #1a1d1b;
+            --border: #2a2f2c;
+            --border-bright: #3d4540;
+            --ink: #e8ede9;
+            --ink-muted: #8a9690;
+            --ink-dim: #4a5550;
+            --accent: #00e87a;
+            --accent-dim: rgba(0, 232, 122, 0.12);
+            --warn: #f0b429;
+            --warn-dim: rgba(240, 180, 41, 0.12);
+            --red: #e85555;
+            --red-dim: rgba(232, 85, 85, 0.10);
+            --amber: #e8a020;
+            --amber-dim: rgba(232, 160, 32, 0.12);
+            --grid-line: rgba(42, 47, 44, 0.6);
+            --mono: 'IBM Plex Mono', monospace;
+            --sans: 'IBM Plex Sans', sans-serif;
+            --display: 'Bebas Neue', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        * {
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13, 15, 14, 0.95);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            text-decoration: none;
+        }
+
+        .nav-tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-cta {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--bg);
+            background: var(--accent);
+            padding: 8px 18px;
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            transition: opacity 0.2s;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.85;
+        }
+
+        .marquee-wrap {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            padding: 12px 0;
+            background: var(--surface);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            animation: marquee 28s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .marquee-item span {
+            color: var(--accent);
+            margin-right: 60px;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .hero {
+            padding: 100px 40px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero-headline {
+            font-family: var(--display);
+            font-size: clamp(72px, 10vw, 130px);
+            line-height: 0.92;
+            letter-spacing: 0.01em;
+            color: var(--ink);
+            margin-bottom: 32px;
+        }
+
+        .hero-headline .accent-line {
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--ink-muted);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .hero-sub strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .hero-data-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1px solid var(--border);
+            max-width: 640px;
+        }
+
+        .hero-stat {
+            padding: 20px 24px;
+            border-right: 1px solid var(--border);
+        }
+
+        .hero-stat:last-child {
+            border-right: none;
+        }
+
+        .hero-stat-val {
+            font-family: var(--display);
+            font-size: 40px;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .hero-stat-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 48px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            font-family: var(--display);
+            font-size: clamp(36px, 5vw, 64px);
+            letter-spacing: 0.02em;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .section-num {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            position: absolute;
+            right: 0;
+            bottom: 20px;
+        }
+
+        .rule {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .problem-cell {
+            background: var(--surface);
+            padding: 32px;
+        }
+
+        .problem-cell.full-width {
+            grid-column: span 2;
+        }
+
+        .cell-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .problem-cell h3 {
+            font-family: var(--mono);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--warn);
+            margin-bottom: 12px;
+        }
+
+        .problem-cell p {
+            font-size: 14px;
+            color: var(--ink-muted);
+            line-height: 1.7;
+        }
+
+        .problem-cell p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .callout-block {
+            background: var(--amber-dim);
+            border-left: 3px solid var(--amber);
+            padding: 24px 28px;
+        }
+
+        .callout-block p {
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        .callout-block strong {
+            color: var(--amber);
+            font-weight: 600;
+        }
+
+        .fault-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fault-item {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 12px;
+            align-items: start;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .fault-index {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            padding-top: 3px;
+        }
+
+        .fault-text {
+            font-size: 14px;
+            color: var(--ink-muted);
+        }
+
+        .fault-text strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .solution-intro {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: start;
+            margin-bottom: 60px;
+        }
+
+        .solution-intro-text h3 {
+            font-family: var(--display);
+            font-size: 42px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .solution-intro-text p {
+            font-size: 15px;
+            color: var(--ink-muted);
+            line-height: 1.75;
+            margin-bottom: 16px;
+        }
+
+        .solution-intro-text p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* Risk register visual */
+        .risk-diagram {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 24px;
+        }
+
+        .diagram-header {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .risk-row {
+            display: grid;
+            grid-template-columns: 1fr 60px 60px;
+            gap: 8px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .risk-row:last-child {
+            border-bottom: none;
+        }
+
+        .risk-row-header {
+            display: grid;
+            grid-template-columns: 1fr 60px 60px;
+            gap: 8px;
+            padding: 0 0 8px;
+            border-bottom: 1px solid var(--border-bright);
+            margin-bottom: 4px;
+        }
+
+        .risk-header-label {
+            font-family: var(--mono);
+            font-size: 9px;
+            color: var(--ink-dim);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .risk-header-label:first-child {
+            text-align: left;
+        }
+
+        .risk-category {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+        }
+
+        .risk-badge {
+            font-family: var(--mono);
+            font-size: 10px;
+            padding: 3px 6px;
+            text-align: center;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+        }
+
+        .risk-hi {
+            background: var(--red-dim);
+            color: var(--red);
+            border: 1px solid var(--red);
+        }
+
+        .risk-med {
+            background: var(--warn-dim);
+            color: var(--warn);
+            border: 1px solid var(--warn);
+        }
+
+        .risk-lo {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .risk-na {
+            background: transparent;
+            color: var(--ink-dim);
+            border: 1px solid var(--border);
+        }
+
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .spec-cell {
+            background: var(--surface);
+            padding: 24px;
+        }
+
+        .spec-cell-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .spec-cell-val {
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--accent);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .spec-cell-desc {
+            font-size: 12px;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+
+        .packages-table {
+            border: 1px solid var(--border);
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--mono);
+        }
+
+        .packages-thead th {
+            background: var(--surface-2);
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .packages-thead th:last-child {
+            border-right: none;
+        }
+
+        .pkg-row {
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .pkg-row:last-child {
+            border-bottom: none;
+        }
+
+        .pkg-cell {
+            padding: 24px 20px;
+            border-right: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .pkg-cell:last-child {
+            border-right: none;
+        }
+
+        .pkg-id {
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .pkg-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .pkg-subtitle {
+            font-size: 10px;
+            color: var(--ink-muted);
+            font-family: var(--sans);
+            letter-spacing: 0.04em;
+        }
+
+        .pkg-deliverable {
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-family: var(--sans);
+            line-height: 1.6;
+        }
+
+        .pkg-deliverable ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pkg-deliverable li {
+            padding: 4px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .pkg-deliverable li::before {
+            content: '→';
+            color: var(--accent);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .pkg-scope {
+            font-size: 12px;
+            color: var(--ink-muted);
+            font-family: var(--sans);
+        }
+
+        .pkg-outcome {
+            font-size: 12px;
+            color: var(--ink);
+            font-family: var(--sans);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .badge-tier {
+            display: inline-block;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            padding: 3px 8px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .badge-rapid {
+            background: var(--warn-dim);
+            color: var(--warn);
+            border: 1px solid var(--warn);
+        }
+
+        .badge-full {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .badge-ongoing {
+            background: rgba(120, 100, 255, 0.12);
+            color: #9d8fff;
+            border: 1px solid #9d8fff;
+        }
+
+        .pkg-row.highlight-row .pkg-cell {
+            background: var(--accent-dim);
+        }
+
+        .pkg-row.highlight-row .pkg-name {
+            color: var(--accent);
+        }
+
+        .why-dan-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-top: 48px;
+        }
+
+        .why-cell {
+            background: var(--surface);
+            padding: 32px;
+        }
+
+        .why-cell.wide {
+            grid-column: span 2;
+            background: var(--surface-2);
+        }
+
+        .why-cell h3 {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            letter-spacing: 0.04em;
+        }
+
+        .why-cell p {
+            font-size: 14px;
+            color: var(--ink-muted);
+            line-height: 1.7;
+        }
+
+        .why-cell p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .why-cell.wide blockquote {
+            font-family: var(--display);
+            font-size: clamp(28px, 4vw, 48px);
+            color: var(--ink);
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+        }
+
+        .why-cell.wide blockquote span {
+            color: var(--accent);
+        }
+
+        .credentials-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .credentials-list li {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--ink-muted);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+
+        .credentials-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cred-key {
+            color: var(--ink-dim);
+            width: 160px;
+            flex-shrink: 0;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .cta-section {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 64px 48px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .cta-section h2 {
+            font-family: var(--display);
+            font-size: clamp(40px, 5vw, 72px);
+            color: var(--ink);
+            line-height: 1;
+            letter-spacing: 0.02em;
+            margin-bottom: 16px;
+        }
+
+        .cta-section h2 span {
+            color: var(--accent);
+        }
+
+        .cta-section p {
+            font-size: 15px;
+            color: var(--ink-muted);
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        .cta-section p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .cta-schema {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-dim);
+            letter-spacing: 0.06em;
+            margin-top: 20px;
+        }
+
+        .cta-block {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--bg);
+            background: var(--accent);
+            padding: 16px 32px;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid var(--accent);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-secondary {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-muted);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--ink);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-dim);
+            letter-spacing: 0.05em;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .container {
+                padding: 60px 20px;
+            }
+
+            .hero-headline {
+                font-size: 68px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-cell.full-width {
+                grid-column: span 1;
+            }
+
+            .solution-intro {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-specs {
+                grid-template-columns: 1fr;
+            }
+
+            .why-dan-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .why-cell.wide {
+                grid-column: span 1;
+            }
+
+            .cta-section {
+                grid-template-columns: 1fr;
+            }
+
+            .packages-table {
+                font-size: 11px;
+            }
+
+            .pkg-cell {
+                padding: 16px 12px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .hero-data-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stat {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .hero-stat:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="https://www.draftingdan.com" class="nav-logo">// DRAFTING DAN</a>
+        <span class="nav-tag">TECHNICAL DUE DILIGENCE</span>
+        <a href="#dd-consult" class="nav-cta">REQUEST AUDIT</a>
+    </nav>
+
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span class="marquee-item">TECHNICAL DUE DILIGENCE <span>◆</span></span>
+            <span class="marquee-item">M&amp;A TECHNOLOGY AUDIT <span>◆</span></span>
+            <span class="marquee-item">INVESTMENT RISK ASSESSMENT <span>◆</span></span>
+            <span class="marquee-item">ARCHITECTURE INSPECTION <span>◆</span></span>
+            <span class="marquee-item">DEBT QUANTIFICATION <span>◆</span></span>
+            <span class="marquee-item">INFRASTRUCTURE INTEGRITY <span>◆</span></span>
+            <span class="marquee-item">BLUEPRINTS FOR THE MODERN ENTERPRISE <span>◆</span></span>
+            <span class="marquee-item">TECHNICAL DUE DILIGENCE <span>◆</span></span>
+            <span class="marquee-item">M&amp;A TECHNOLOGY AUDIT <span>◆</span></span>
+            <span class="marquee-item">INVESTMENT RISK ASSESSMENT <span>◆</span></span>
+            <span class="marquee-item">ARCHITECTURE INSPECTION <span>◆</span></span>
+            <span class="marquee-item">DEBT QUANTIFICATION <span>◆</span></span>
+            <span class="marquee-item">INFRASTRUCTURE INTEGRITY <span>◆</span></span>
+            <span class="marquee-item">BLUEPRINTS FOR THE MODERN ENTERPRISE <span>◆</span></span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <p class="hero-eyebrow fade-in">TECHNICAL DUE DILIGENCE — SERVICE SPEC v2025</p>
+        <h1 class="hero-headline fade-in delay-1">
+            KNOW WHAT<br>
+            <span class="accent-line">YOU'RE BUYING</span>
+            BEFORE YOU BUY IT.
+        </h1>
+        <p class="hero-sub fade-in delay-2">
+            The financials tell you what a company earned. The technology tells you what it will cost to keep earning
+            it. <strong>Undisclosed technical debt, fragile architecture, and undocumented systems are material
+                risks</strong> — and they don't appear on any balance sheet. A technical audit does.
+        </p>
+        <div class="hero-data-strip fade-in delay-3">
+            <div class="hero-stat">
+                <div class="hero-stat-val">25</div>
+                <div class="hero-stat-label">Years Architecting Enterprise Systems</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-val">15</div>
+                <div class="hero-stat-label">Years Enterprise-Scale Engineering</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-val">MBA</div>
+                <div class="hero-stat-label">Finance + IT Management</div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 01</span>
+            <h2 class="section-title">THE HIDDEN LOAD</h2>
+            <span class="section-num">RISK PROFILE ANALYSIS</span>
+        </div>
+
+        <div class="problem-grid">
+            <div class="problem-cell full-width">
+                <div class="cell-label">STRUCTURAL CONTEXT</div>
+                <p>A structural engineer doesn't just look at a building's blueprints before a sale closes. They inspect
+                    the foundation, test the load-bearing walls, check for concealed damage behind the finished
+                    surfaces. The building can look pristine from the outside and be quietly failing from within.
+                    <strong>Software systems work exactly the same way.</strong> The product demo looks clean. The
+                    revenue numbers are growing. But underneath: undocumented dependencies, a decade of accumulated
+                    technical debt, a codebase that three engineers maintain and nobody else can read, and
+                    infrastructure one failed server away from a critical outage. These risks are real, quantifiable —
+                    and discoverable before you sign.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">RISK CATEGORY 001</div>
+                <h3>⚠ UNDISCLOSED TECHNICAL DEBT</h3>
+                <p>Every software company carries technical debt. The question is how much, how concentrated, and how
+                    expensive to service. Short-cuts taken to hit launch deadlines compound into systemic liabilities.
+                    The cleanup cost is real — and it belongs in your valuation model.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">RISK CATEGORY 002</div>
+                <h3>⚠ KEY-PERSON DEPENDENCY</h3>
+                <p>One engineer knows how the payment system works. One architect wrote the core data model and never
+                    documented it. If those people leave post-acquisition — and they often do — what you paid for begins
+                    to degrade immediately. Key-person risk is a structural liability, not a personnel footnote.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">RISK CATEGORY 003</div>
+                <h3>⚠ SCALABILITY CEILING</h3>
+                <p>The current architecture handles the current load. But can it handle 10x users? What breaks first,
+                    and how much does it cost to fix? Growth is the plan. If the infrastructure can't support it, the
+                    plan requires unplanned capital — which changes the deal math.</p>
+            </div>
+            <div class="problem-cell">
+                <div class="cell-label">RISK CATEGORY 004</div>
+                <h3>⚠ COMPLIANCE & SECURITY EXPOSURE</h3>
+                <p>Data handling, access controls, encryption standards, and third-party dependency licenses don't
+                    always get disclosed in a data room. Undiscovered compliance gaps become acquirer liability the
+                    moment the deal closes. Pre-close discovery is exponentially cheaper than post-close remediation.
+                </p>
+            </div>
+            <div class="problem-cell full-width callout-block">
+                <p>The question isn't whether the technology works today. <strong>The question is what it will cost to
+                        keep it working, scale it, and secure it after the deal closes.</strong> That number belongs in
+                    the LOI, not in the first post-acquisition engineering sprint.</p>
+            </div>
+        </div>
+
+        <div class="fault-list">
+            <div class="fault-item">
+                <span class="fault-index">F.01</span>
+                <p class="fault-text"><strong>No independent technical assessment.</strong> The target's engineering
+                    team self-reports health. That's not an audit — it's a reference check written by the candidate.</p>
+            </div>
+            <div class="fault-item">
+                <span class="fault-index">F.02</span>
+                <p class="fault-text"><strong>Architecture quality not represented in financial models.</strong> Rebuild
+                    or migration costs are omitted from integration budgets. Post-close surprises erode deal value and
+                    damage stakeholder confidence.</p>
+            </div>
+            <div class="fault-item">
+                <span class="fault-index">F.03</span>
+                <p class="fault-text"><strong>Licensing and open-source compliance unreviewed.</strong> GPL-licensed
+                    components in commercial software, expired vendor contracts, and undocumented SaaS dependencies are
+                    material risks that don't surface in legal DD alone.</p>
+            </div>
+            <div class="fault-item">
+                <span class="fault-index">F.04</span>
+                <p class="fault-text"><strong>Integration complexity underestimated.</strong> Connecting the target's
+                    systems to your existing stack takes longer and costs more than expected — every time — when the
+                    target's architecture is undocumented and untested.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 02</span>
+            <h2 class="section-title">THE TECHNICAL INSPECTION</h2>
+            <span class="section-num">METHODOLOGY SPEC</span>
+        </div>
+
+        <div class="solution-intro">
+            <div class="solution-intro-text">
+                <h3>INSPECT. QUANTIFY. REPORT.</h3>
+                <p>I conduct technical due diligence the way a structural engineer inspects a building before a sale:
+                    <strong>systematically, independently, and with full documentation of findings.</strong> Not a
+                    surface-level walkthrough — a load-bearing assessment of architecture, codebase quality,
+                    infrastructure, team, and operational risk.</p>
+                <p>My 25 years of enterprise web architecture experience means I know what healthy systems look like at
+                    scale — and I recognize the patterns of systems that are quietly failing. My MBA gives me the
+                    framework to translate technical findings into financial language: remediation cost estimates,
+                    integration risk factors, and valuation adjustments that belong in a deal model.</p>
+                <p>The deliverable is a <strong>Technical Due Diligence Report</strong>: a structured, risk-rated
+                    assessment across all material technical domains, with executive summary, detailed findings, and
+                    quantified remediation estimates. <strong>Written for both the boardroom and the engineering
+                        team.</strong> No jargon substituting for substance.</p>
+                <p>Timeline and depth are scoped to your deal requirements — from a rapid pre-LOI flag check to a full
+                    pre-close architecture inspection.</p>
+            </div>
+
+            <div class="risk-diagram">
+                <div class="diagram-header">// RISK REGISTER — SAMPLE OUTPUT</div>
+
+                <div class="risk-row-header">
+                    <div class="risk-header-label">DOMAIN</div>
+                    <div class="risk-header-label">SEVERITY</div>
+                    <div class="risk-header-label">COST FLAG</div>
+                </div>
+
+                <div class="risk-row">
+                    <div class="risk-category">Architecture Integrity</div>
+                    <div class="risk-badge risk-med">MED</div>
+                    <div class="risk-badge risk-med">MED</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">Technical Debt Volume</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">Scalability Ceiling</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">Key-Person Dependency</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                    <div class="risk-badge risk-med">MED</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">Security Posture</div>
+                    <div class="risk-badge risk-med">MED</div>
+                    <div class="risk-badge risk-lo">LOW</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">License Compliance</div>
+                    <div class="risk-badge risk-lo">LOW</div>
+                    <div class="risk-badge risk-lo">LOW</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">Documentation Quality</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                    <div class="risk-badge risk-med">MED</div>
+                </div>
+                <div class="risk-row">
+                    <div class="risk-category">Integration Complexity</div>
+                    <div class="risk-badge risk-med">MED</div>
+                    <div class="risk-badge risk-hi">HIGH</div>
+                </div>
+
+                <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border);">
+                    <div
+                        style="font-family:var(--mono); font-size:10px; color:var(--ink-dim); margin-bottom:4px; letter-spacing:0.08em; text-transform:uppercase;">
+                        OVERALL RATING</div>
+                    <div style="font-family:var(--mono); font-size:12px; color:var(--warn);">MODERATE-HIGH — Recommend
+                        negotiated adjustment</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-specs">
+            <div class="spec-cell">
+                <div class="spec-cell-label">INDEPENDENCE</div>
+                <div class="spec-cell-val">FULLY NEUTRAL</div>
+                <div class="spec-cell-desc">No relationship with the target company. No incentive to minimize or inflate
+                    findings. The report serves the investor or acquirer — period.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">DELIVERABLE FORMAT</div>
+                <div class="spec-cell-val">RISK-RATED REPORT</div>
+                <div class="spec-cell-desc">Structured findings across all technical domains, each rated by severity and
+                    financial impact. Executive summary with deal implications. Full technical appendix.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">FINANCIAL TRANSLATION</div>
+                <div class="spec-cell-val">COST-QUANTIFIED</div>
+                <div class="spec-cell-desc">Technical risks are translated into remediation cost estimates, integration
+                    budget flags, and valuation adjustment recommendations — in language that belongs in a deal model.
+                </div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">SCOPE COVERAGE</div>
+                <div class="spec-cell-val">FULL STACK</div>
+                <div class="spec-cell-desc">Architecture, codebase, infrastructure, security, compliance, team,
+                    documentation, and integration complexity. No domain left unassessed.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">TIMELINE</div>
+                <div class="spec-cell-val">DEAL-PACED</div>
+                <div class="spec-cell-desc">Rapid assessments in 5–7 days for pre-LOI flags. Full diligence in 2–3
+                    weeks. Timeline is scoped to your deal stage and confidentiality requirements.</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-cell-label">AI SYSTEMS</div>
+                <div class="spec-cell-val">INCLUDED IN SCOPE</div>
+                <div class="spec-cell-desc">Targets using AI/ML components receive assessment of model risk, data
+                    infrastructure quality, and AI-related technical debt — a domain most generalist auditors miss.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 03</span>
+            <h2 class="section-title">ENGAGEMENT BLUEPRINTS</h2>
+            <span class="section-num">SERVICE SPECIFICATIONS</span>
+        </div>
+
+        <table class="packages-table">
+            <thead class="packages-thead">
+                <tr>
+                    <th style="width:220px">PACKAGE</th>
+                    <th>DELIVERABLES</th>
+                    <th>SCOPE &amp; ENGAGEMENT</th>
+                    <th>STRUCTURAL OUTCOME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pkg-row">
+                    <td class="pkg-cell">
+                        <span class="pkg-id">DD-01</span>
+                        <span class="pkg-name">RAPID FLAG ASSESSMENT</span>
+                        <span class="pkg-subtitle">Pre-LOI Technical Scan</span>
+                        <div><span class="badge-tier badge-rapid">RAPID</span></div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-deliverable">
+                            <ul>
+                                <li>High-level architecture review</li>
+                                <li>Critical risk flag identification (go/no-go factors)</li>
+                                <li>Key-person dependency scan</li>
+                                <li>Technology stack evaluation</li>
+                                <li>Written one-page risk summary with flags rated HIGH / MED / LOW</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-scope">Fixed engagement. Remote review of provided documentation, codebase
+                            samples, and architecture diagrams. Delivered in 5–7 business days. Designed for pre-LOI
+                            decision gates.</div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-outcome">You know whether there are material deal-breakers before investing in
+                            full diligence. High-confidence go / proceed-with-caution / walk-away signal in under a
+                            week.</div>
+                    </td>
+                </tr>
+
+                <tr class="pkg-row highlight-row">
+                    <td class="pkg-cell">
+                        <span class="pkg-id">DD-02</span>
+                        <span class="pkg-name">FULL TECHNICAL AUDIT</span>
+                        <span class="pkg-subtitle">Pre-Close Due Diligence Report</span>
+                        <div><span class="badge-tier badge-full">FULL AUDIT</span></div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-deliverable">
+                            <ul>
+                                <li>Complete architecture and codebase inspection</li>
+                                <li>Risk register across all technical domains</li>
+                                <li>Technical debt quantification with remediation cost estimates</li>
+                                <li>Security posture and compliance review</li>
+                                <li>Integration complexity assessment vs. acquirer's stack</li>
+                                <li>Full written report: executive summary + technical appendix</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-scope">Project-based engagement. Requires data room access, codebase access, and
+                            interviews with target's technical leads. Timeline: 2–3 weeks. NDA required.</div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-outcome">Every material technical risk is identified, rated, and cost-quantified
+                            before closing. You negotiate from fact, not assumption. Post-close surprises are minimized
+                            by design.</div>
+                    </td>
+                </tr>
+
+                <tr class="pkg-row">
+                    <td class="pkg-cell">
+                        <span class="pkg-id">DD-03</span>
+                        <span class="pkg-name">POST-CLOSE INTEGRATION</span>
+                        <span class="pkg-subtitle">Technical Integration Advisory</span>
+                        <div><span class="badge-tier badge-ongoing">ADVISORY</span></div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-deliverable">
+                            <ul>
+                                <li>Integration architecture design and sequencing</li>
+                                <li>Technical debt remediation roadmap</li>
+                                <li>Engineering team assessment and structure plan</li>
+                                <li>Ongoing advisory through integration milestones</li>
+                                <li>Risk register tracking and updates</li>
+                                <li>Executive reporting on integration progress</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-scope">Monthly retainer. Activated post-close. Typically follows Full Technical
+                            Audit engagement. Minimum 3-month term, scoped to integration timeline.</div>
+                    </td>
+                    <td class="pkg-cell">
+                        <div class="pkg-outcome">The risks identified in the audit are actively managed, not just
+                            documented. Integration stays on schedule, on budget, and governed by someone who knows
+                            exactly what was found before close.</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container">
+        <div class="section-header">
+            <span class="section-tag">SECTION 04</span>
+            <h2 class="section-title">WHY DAN?</h2>
+            <span class="section-num">CREDENTIALS SPEC</span>
+        </div>
+
+        <div class="why-dan-grid">
+            <div class="why-cell wide">
+                <blockquote>"You can't negotiate what<br>you haven't <span>inspected.</span>"</blockquote>
+            </div>
+
+            <div class="why-cell">
+                <h3>BUILT SYSTEMS. KNOWS THE FAILURE MODES.</h3>
+                <p>Technical due diligence is only as useful as the examiner's ability to recognize what they're looking
+                    at. I've spent 15 years architecting and maintaining enterprise-scale web applications —
+                    <strong>which means I've seen what good architecture looks like under production load, and I've also
+                        seen what accumulated technical debt looks like from the inside.</strong> I know the difference
+                    between a codebase that's mature and a codebase that's been held together with workarounds for three
+                    years. That distinction matters in a deal.</p>
+            </div>
+
+            <div class="why-cell">
+                <h3>CREDENTIALS SCHEMA</h3>
+                <ul class="credentials-list">
+                    <li><span class="cred-key">EXPERIENCE</span> 25 years in technical systems roles</li>
+                    <li><span class="cred-key">CIVIL ENG.</span> 10 years — infrastructure inspection &amp; QA</li>
+                    <li><span class="cred-key">WEB ARCH.</span> 15 years enterprise-scale architecture</li>
+                    <li><span class="cred-key">MBA</span> IT Management + financial modeling fluency</li>
+                    <li><span class="cred-key">MS (in prog.)</span> Software Engineering — AI Engineering</li>
+                    <li><span class="cred-key">AI SYSTEMS</span> Qualified to assess AI/ML technical risk</li>
+                </ul>
+            </div>
+
+            <div class="why-cell">
+                <h3>THE CIVIL ENGINEERING PARALLEL</h3>
+                <p>A decade of civil engineering and land surveying trained me to inspect physical infrastructure before
+                    it's transferred, built upon, or load-tested. That discipline — <strong>systematic inspection,
+                        objective measurement, documented findings, stamped report</strong> — maps directly onto
+                    software due diligence. I don't deliver opinions. I deliver findings with evidence, ratings with
+                    justification, and cost estimates grounded in real remediation experience.</p>
+            </div>
+
+            <div class="why-cell">
+                <h3>SPEAKS THE DEAL ROOM'S LANGUAGE</h3>
+                <p>Most technical auditors produce reports that investors can't parse and engineers can't act on. My MBA
+                    gives me the framework to <strong>translate architecture findings into financial terms</strong>:
+                    what this costs to fix, what it costs to operate, and what it does to the deal model. My engineering
+                    background means the technical findings are precise, not superficial. You get a report that closes
+                    the loop between the technical data room and the financial model.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="container" id="dd-consult">
+        <div class="cta-section">
+            <div>
+                <h2>REQUEST A <span>TECHNICAL</span> AUDIT.</h2>
+                <p>The Rapid Flag Assessment is the right starting point for most deals — a fast, focused review that
+                    tells you whether there are material technical deal-breakers before you invest in full diligence.
+                    <strong>Delivered in 5–7 days. Scoped to your timeline. NDA-protected.</strong></p>
+                <p style="margin-top:12px">If you're already in the full diligence phase, the Full Technical Audit
+                    delivers a complete risk register with cost-quantified findings ready for the deal model.</p>
+                <p class="cta-schema">// SCHEMA: request.type = "technical_due_diligence" → payload.destination =
+                    "draftingdan.com"</p>
+            </div>
+            <div class="cta-block">
+                <a href="mailto:inquiry@draftingdan.com" class="btn-primary">REQUEST AUDIT →</a>
+                <a href="/tech-strategy" class="btn-secondary">↗ VIEW TECH STRATEGY SERVICE</a>
+                <a href="mailto:daniel@draftingdan.com" class="btn-secondary">↗ EMAIL DAN DIRECTLY</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 <a href="https://www.draftingdan.com">DRAFTING DAN</a> — TECHNICAL DUE DILIGENCE</p>
+        <p>INSPECT BEFORE YOU INVEST. FINDINGS, NOT OPINIONS.</p>
+    </footer>
+
+</body>
+
+</html>
