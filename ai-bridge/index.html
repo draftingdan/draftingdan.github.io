@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic Infrastructure & AI Bridges — Drafting Dan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;700&family=Bebas+Neue&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f0e;
+      --surface: #131614;
+      --surface-2: #1a1d1b;
+      --border: #2a2f2c;
+      --border-bright: #3d4540;
+      --ink: #e8ede9;
+      --ink-muted: #8a9690;
+      --ink-dim: #4a5550;
+      --accent: #00e87a;
+      --accent-dim: rgba(0, 232, 122, 0.12);
+      --accent-mid: rgba(0, 232, 122, 0.25);
+      --warn: #f0b429;
+      --warn-dim: rgba(240, 180, 41, 0.12);
+      --red: #e85555;
+      --red-dim: rgba(232, 85, 85, 0.10);
+      --grid-line: rgba(42, 47, 44, 0.6);
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'IBM Plex Sans', sans-serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* NAV */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13, 15, 14, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .nav-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 8px 18px;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.85;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 100px 40px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-headline {
+      font-family: var(--display);
+      font-size: clamp(72px, 10vw, 140px);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline .accent-line {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--ink-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .hero-sub strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .hero-data-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      max-width: 640px;
+    }
+
+    .hero-stat {
+      padding: 20px 24px;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-stat:last-child {
+      border-right: none;
+    }
+
+    .hero-stat-val {
+      font-family: var(--display);
+      font-size: 40px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* SECTION HEADERS */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 48px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    /* PROBLEM SECTION */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .problem-cell {
+      background: var(--surface);
+      padding: 32px;
+    }
+
+    .problem-cell.full-width {
+      grid-column: span 2;
+    }
+
+    .cell-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .problem-cell h3 {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--warn);
+      margin-bottom: 12px;
+    }
+
+    .problem-cell p {
+      font-size: 14px;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    .crack-stat {
+      font-family: var(--display);
+      font-size: 56px;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .crack-desc {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .tax-callout {
+      background: var(--red-dim);
+      border-left: 3px solid var(--red);
+      padding: 24px 28px;
+      margin-top: 0;
+    }
+
+    .tax-callout p {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .tax-callout strong {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    /* FAULT LIST */
+    .fault-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .fault-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fault-index {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      padding-top: 3px;
+    }
+
+    .fault-text {
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .fault-text strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* SOLUTION SECTION */
+    .solution-intro {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: start;
+      margin-bottom: 60px;
+    }
+
+    .solution-intro-text h3 {
+      font-family: var(--display);
+      font-size: 42px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    .solution-intro-text p {
+      font-size: 15px;
+      color: var(--ink-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .solution-intro-text p strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Pipeline diagram */
+    .pipeline-diagram {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .pipeline-header {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 8px;
+    }
+
+    .pipeline-node {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      flex: 1;
+    }
+
+    .pipeline-node-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .pipeline-node-val {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    .pipeline-node.active {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .pipeline-node.active .pipeline-node-val {
+      color: var(--accent);
+    }
+
+    .pipeline-arrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+
+    .pipeline-status {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    .status-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+
+    /* Tech specs grid */
+    .tech-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .spec-cell {
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .spec-cell-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .spec-cell-val {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .spec-cell-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    /* PACKAGES */
+    .packages-table {
+      border: 1px solid var(--border);
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+    }
+
+    .packages-thead th {
+      background: var(--surface-2);
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .packages-thead th:last-child {
+      border-right: none;
+    }
+
+    .pkg-row {
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .pkg-row:last-child {
+      border-bottom: none;
+    }
+
+    .pkg-cell {
+      padding: 24px 20px;
+      border-right: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .pkg-cell:last-child {
+      border-right: none;
+    }
+
+    .pkg-id {
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .pkg-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .pkg-subtitle {
+      font-size: 10px;
+      color: var(--ink-muted);
+      font-family: var(--sans);
+      letter-spacing: 0.04em;
+    }
+
+    .pkg-deliverable {
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-family: var(--sans);
+      line-height: 1.6;
+    }
+
+    .pkg-deliverable ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pkg-deliverable li {
+      padding: 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .pkg-deliverable li::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .pkg-scope {
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-family: var(--sans);
+    }
+
+    .pkg-outcome {
+      font-size: 12px;
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .badge-tier {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    .badge-audit {
+      background: var(--warn-dim);
+      color: var(--warn);
+      border: 1px solid var(--warn);
+    }
+
+    .badge-bridge {
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .badge-enterprise {
+      background: rgba(120, 100, 255, 0.12);
+      color: #9d8fff;
+      border: 1px solid #9d8fff;
+    }
+
+    .pkg-row.highlight-row .pkg-cell {
+      background: var(--accent-dim);
+    }
+
+    .pkg-row.highlight-row .pkg-name {
+      color: var(--accent);
+    }
+
+    /* WHY DAN */
+    .why-dan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .why-cell {
+      background: var(--surface);
+      padding: 32px;
+    }
+
+    .why-cell.wide {
+      grid-column: span 2;
+      background: var(--surface-2);
+    }
+
+    .why-cell h3 {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .why-cell p {
+      font-size: 14px;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    .why-cell p strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .why-cell.wide blockquote {
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 48px);
+      color: var(--ink);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+    }
+
+    .why-cell.wide blockquote span {
+      color: var(--accent);
+    }
+
+    .credentials-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+
+    .credentials-list li {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .credentials-list li:last-child {
+      border-bottom: none;
+    }
+
+    .cred-key {
+      color: var(--ink-dim);
+      width: 160px;
+      flex-shrink: 0;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 64px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    .cta-section h2 {
+      font-family: var(--display);
+      font-size: clamp(40px, 5vw, 72px);
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-section h2 span {
+      color: var(--accent);
+    }
+
+    .cta-section p {
+      font-size: 15px;
+      color: var(--ink-muted);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .cta-section p strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .cta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 16px 32px;
+      text-decoration: none;
+      display: inline-block;
+      border: 2px solid var(--accent);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-secondary {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      color: var(--ink);
+    }
+
+    .cta-schema {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.06em;
+      margin-top: 8px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.05em;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* DIVIDER */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* SECTION accent mark */
+    .section-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      position: absolute;
+      right: 0;
+      bottom: 20px;
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 12px 0;
+      background: var(--surface);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 60px;
+      animation: marquee 24s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee-item {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .marquee-item span {
+      color: var(--accent);
+      margin-right: 60px;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      .hero {
+        padding: 60px 20px 60px;
+      }
+
+      .container {
+        padding: 60px 20px;
+      }
+
+      .hero-headline {
+        font-size: 72px;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-cell.full-width {
+        grid-column: span 1;
+      }
+
+      .solution-intro {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-specs {
+        grid-template-columns: 1fr;
+      }
+
+      .why-dan-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-cell.wide {
+        grid-column: span 1;
+      }
+
+      .cta-section {
+        grid-template-columns: 1fr;
+      }
+
+      .packages-table {
+        font-size: 11px;
+      }
+
+      .pkg-cell {
+        padding: 16px 12px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .hero-data-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stat {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-stat:last-child {
+        border-bottom: none;
+      }
+    }
+
+    /* Entry animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://www.draftingdan.com" class="nav-logo">// DRAFTING DAN</a>
+    <span class="nav-tag">SEMANTIC INFRASTRUCTURE &amp; AI BRIDGES</span>
+    <a href="#audit" class="nav-cta">REQUEST AUDIT</a>
+  </nav>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">SINGLE-ENTRY DATA SYSTEMS <span>◆</span></span>
+      <span class="marquee-item">DETERMINISTIC PIPELINES <span>◆</span></span>
+      <span class="marquee-item">STRUCTURAL INTEGRITY <span>◆</span></span>
+      <span class="marquee-item">ZERO-REDUNDANCY SCHEMA <span>◆</span></span>
+      <span class="marquee-item">AI BRIDGES <span>◆</span></span>
+      <span class="marquee-item">PAYLOAD ROUTING <span>◆</span></span>
+      <span class="marquee-item">BLUEPRINTS FOR THE MODERN ENTERPRISE <span>◆</span></span>
+      <span class="marquee-item">SINGLE-ENTRY DATA SYSTEMS <span>◆</span></span>
+      <span class="marquee-item">DETERMINISTIC PIPELINES <span>◆</span></span>
+      <span class="marquee-item">STRUCTURAL INTEGRITY <span>◆</span></span>
+      <span class="marquee-item">ZERO-REDUNDANCY SCHEMA <span>◆</span></span>
+      <span class="marquee-item">AI BRIDGES <span>◆</span></span>
+      <span class="marquee-item">PAYLOAD ROUTING <span>◆</span></span>
+      <span class="marquee-item">BLUEPRINTS FOR THE MODERN ENTERPRISE <span>◆</span></span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow fade-in">SEMANTIC INFRASTRUCTURE &amp; AI BRIDGES — REV. 2025</p>
+    <h1 class="hero-headline fade-in delay-1">
+      STOP PAYING<br>
+      <span class="accent-line">THE MANUAL</span>
+      ENTRY TAX.
+    </h1>
+    <p class="hero-sub fade-in delay-2">
+      Your tools are expensive. Your team is talented. But somewhere between your email, your CRM, and your ERP,
+      <strong>data is being re-entered by hand—and that re-entry is costing you money, accuracy, and time every single
+        day.</strong>
+    </p>
+    <div class="hero-data-strip fade-in delay-3">
+      <div class="hero-stat">
+        <div class="hero-stat-val">4.1H</div>
+        <div class="hero-stat-label">Avg. Daily Manual Entry / FTE</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">88%</div>
+        <div class="hero-stat-label">Spreadsheets with Data Errors</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">$0</div>
+        <div class="hero-stat-label">ROI from Data Entered Twice</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- PROBLEM SECTION -->
+  <section class="container">
+    <div class="section-header">
+      <span class="section-tag">SECTION 01</span>
+      <h2 class="section-title">THE BROKEN FOUNDATION</h2>
+      <span class="section-num">FAULT ANALYSIS</span>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-cell full-width">
+        <div class="cell-label">STRUCTURAL ASSESSMENT</div>
+        <p>Every building has a foundation. Your business's foundation is its data. When that data lives in siloed
+          systems—email inboxes, disconnected spreadsheets, a CRM that never sees your marketing leads, an ERP that
+          doesn't know your support tickets exist—you don't have a data problem. <strong style="color:var(--ink)">You
+            have a structural failure.</strong> The cracks are invisible at first: a missed follow-up, a wrong invoice
+          amount, a report that took three hours to compile. Over time, those hairline fractures become load-bearing
+          failures.</p>
+      </div>
+
+      <div class="problem-cell">
+        <div class="cell-label">FAULT TYPE 001</div>
+        <h3>⚠ DATA SILOS</h3>
+        <p>Information captured in one system never reaches the systems that need it. Marketing speaks one schema. Sales
+          speaks another. Operations doesn't speak at all. The gap between them is bridged by copy-paste.</p>
+      </div>
+
+      <div class="problem-cell">
+        <div class="cell-label">FAULT TYPE 002</div>
+        <div class="crack-stat">37%</div>
+        <div class="crack-desc">of enterprise data entry contains at least one critical error — Gartner</div>
+      </div>
+
+      <div class="problem-cell">
+        <div class="cell-label">FAULT TYPE 003</div>
+        <h3>⚠ STRUCTURAL LEAKS</h3>
+        <p>PDFs arrive via email. Someone reads them, types the numbers into a spreadsheet, emails the spreadsheet. The
+          payload has leaked at every transfer point. Integrity degrades. No audit trail exists. No one knows what
+          version is "true."</p>
+      </div>
+
+      <div class="problem-cell">
+        <div class="cell-label">FAULT TYPE 004</div>
+        <h3>⚠ SEMANTIC DRIFT</h3>
+        <p>The same field has four names across four systems: "Client," "Account," "Customer," "Company." Your team
+          knows which is which. Your automation doesn't. Your reports are lying to you.</p>
+      </div>
+
+      <div class="problem-cell full-width tax-callout">
+        <p>This is the <strong>Manual Entry Tax</strong>: the invisible toll your business pays when data is entered
+          more than once. It shows up in payroll hours, in reconciliation errors, in deals that slipped through because
+          a lead never made it to the CRM. <strong>Data should be entered once. Period.</strong></p>
+      </div>
+    </div>
+
+    <div class="fault-list">
+      <div class="fault-item">
+        <span class="fault-index">F.01</span>
+        <p class="fault-text"><strong>No Single Source of Truth.</strong> Multiple versions of "reality" exist across
+          departments. Decisions are made on stale or conflicting data.</p>
+      </div>
+      <div class="fault-item">
+        <span class="fault-index">F.02</span>
+        <p class="fault-text"><strong>Human-mediated data transfer.</strong> Skilled employees perform repetitive,
+          low-value, error-prone data transcription instead of mission-critical work.</p>
+      </div>
+      <div class="fault-item">
+        <span class="fault-index">F.03</span>
+        <p class="fault-text"><strong>Unstructured data trapped at the edge.</strong> Emails, PDFs, voicemails, and form
+          submissions contain high-value business intelligence—but it's locked in formats no system can ingest
+          automatically.</p>
+      </div>
+      <div class="fault-item">
+        <span class="fault-index">F.04</span>
+        <p class="fault-text"><strong>Brittle point-to-point connections.</strong> When you do have integrations,
+          they're direct-mapped, fragile, and break on any schema change upstream.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- SOLUTION SECTION -->
+  <section class="container">
+    <div class="section-header">
+      <span class="section-tag">SECTION 02</span>
+      <h2 class="section-title">THE AI BRIDGE</h2>
+      <span class="section-num">INFRASTRUCTURE SPEC</span>
+    </div>
+
+    <div class="solution-intro">
+      <div class="solution-intro-text">
+        <h3>SINGLE-ENTRY INFRASTRUCTURE</h3>
+        <p>I don't build chatbots. I don't build dashboards. I build <strong>Deterministic Data
+            Pipelines</strong>—automated systems that understand the meaning of your incoming data and route it
+          precisely to the right field in the right system, every time, without human intervention.</p>
+        <p>Think of it as a <strong>digital nervous system</strong> for your business. Signals enter at any point—a PDF,
+          an email, a web form, a call transcript—and the infrastructure interprets, validates, and delivers that
+          payload to your Single Source of Truth with structural integrity intact.</p>
+        <p>I use <strong>Gemini's semantic parsing layer</strong> to extract structured data from unstructured inputs,
+          and <strong>Make.com's automation fabric</strong> to route, transform, and synchronize that data across your
+          existing stack. No rip-and-replace. No $500K ERP migration. A bridge—built to spec, installed on your existing
+          foundation.</p>
+        <p>I'm <strong>bridging the gap between your "Marketing Mess" and your "Source of Truth"</strong>—and making
+          that bridge load-bearing.</p>
+      </div>
+
+      <div class="pipeline-diagram">
+        <div class="pipeline-header">// DETERMINISTIC PIPELINE — LIVE FLOW</div>
+
+        <div class="pipeline-step">
+          <div class="pipeline-node">
+            <div class="pipeline-node-label">INPUT</div>
+            <div class="pipeline-node-val">Email / PDF / Form</div>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-arrow" style="padding-left:24px">↓</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-node active">
+            <div class="pipeline-node-label">PARSE / SEMANTIC LAYER</div>
+            <div class="pipeline-node-val">Gemini — Extract &amp; Classify</div>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-arrow" style="padding-left:24px">↓</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-node active">
+            <div class="pipeline-node-label">TRANSFORM / ROUTE</div>
+            <div class="pipeline-node-val">Make.com — Map to Schema</div>
+          </div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-arrow" style="padding-left:24px">↓</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-node">
+            <div class="pipeline-node-label">DESTINATION</div>
+            <div class="pipeline-node-val">CRM / ERP / Source of Truth</div>
+          </div>
+        </div>
+        <div class="pipeline-status">
+          <div class="status-dot"></div>
+          <span class="status-text">INTEGRITY: VERIFIED — ENTRY COUNT: 1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tech-specs">
+      <div class="spec-cell">
+        <div class="spec-cell-label">SCHEMA INTEGRITY</div>
+        <div class="spec-cell-val">ENFORCED AT INGRESS</div>
+        <div class="spec-cell-desc">Every payload is validated against your target schema before it touches your
+          database. Bad data is flagged, not silently written.</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-cell-label">PAYLOAD TYPE</div>
+        <div class="spec-cell-val">UNSTRUCTURED → STRUCTURED</div>
+        <div class="spec-cell-desc">Natural language, PDFs, emails, and forms are parsed into typed, normalized records.
+          Semantic context is preserved through the transform.</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-cell-label">FLOW ARCHITECTURE</div>
+        <div class="spec-cell-val">DETERMINISTIC</div>
+        <div class="spec-cell-desc">No hallucination. No guessing. Pipelines follow defined logic trees with explicit
+          fallback routing, not probabilistic outputs.</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-cell-label">ENTRY COUNT</div>
+        <div class="spec-cell-val" style="color:var(--accent)">EXACTLY ONE</div>
+        <div class="spec-cell-desc">Data enters the system once, at the source. Every downstream system receives it
+          automatically. No re-keying. Ever.</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-cell-label">STACK COMPATIBILITY</div>
+        <div class="spec-cell-val">NON-DESTRUCTIVE</div>
+        <div class="spec-cell-desc">Bridges are installed on top of existing infrastructure. Your current stack stays
+          intact. We add the nervous system; we don't replace the skeleton.</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-cell-label">AUDIT TRAIL</div>
+        <div class="spec-cell-val">FULL PROVENANCE</div>
+        <div class="spec-cell-desc">Every data event is logged with source, timestamp, transform applied, and
+          destination written. Full traceability from input to record.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- PACKAGES -->
+  <section class="container">
+    <div class="section-header">
+      <span class="section-tag">SECTION 03</span>
+      <h2 class="section-title">SERVICE BLUEPRINTS</h2>
+      <span class="section-num">BLUEPRINTS FOR THE MODERN ENTERPRISE</span>
+    </div>
+
+    <table class="packages-table">
+      <thead class="packages-thead">
+        <tr>
+          <th style="width:220px">PACKAGE</th>
+          <th>DELIVERABLES</th>
+          <th>SCOPE &amp; ENGAGEMENT</th>
+          <th>STRUCTURAL OUTCOME</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- Tier 1 -->
+        <tr class="pkg-row">
+          <td class="pkg-cell">
+            <span class="pkg-id">BLUEPRINT-01</span>
+            <span class="pkg-name">THE STRUCTURAL AUDIT</span>
+            <span class="pkg-subtitle">Diagnostic Engagement</span>
+            <div><span class="badge-tier badge-audit">DIAGNOSTIC</span></div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-deliverable">
+              <ul>
+                <li>Full data flow mapping — current state</li>
+                <li>Schema conflict &amp; drift analysis</li>
+                <li>Manual entry tax calculation (hours/month)</li>
+                <li>Silo identification across all active systems</li>
+                <li>Written Infrastructure Report with findings</li>
+                <li>Prioritized remediation roadmap</li>
+              </ul>
+            </div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-scope">
+              Fixed engagement. Remote discovery sessions + async review of current toolstack. Deliverable in 5–7
+              business days. No ongoing commitment required.
+            </div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-outcome">
+              You leave with a blueprint—not a sales pitch. You know exactly where your foundation is cracked, what it's
+              costing you, and what to fix first.
+            </div>
+          </td>
+        </tr>
+
+        <!-- Tier 2 — highlighted -->
+        <tr class="pkg-row highlight-row">
+          <td class="pkg-cell">
+            <span class="pkg-id">BLUEPRINT-02</span>
+            <span class="pkg-name">THE SEMANTIC BRIDGE</span>
+            <span class="pkg-subtitle">Single-Flow Automation</span>
+            <div><span class="badge-tier badge-bridge">AUTOMATION</span></div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-deliverable">
+              <ul>
+                <li>Design &amp; build of one end-to-end data pipeline</li>
+                <li>Semantic parsing layer (Gemini) — configured to your document types</li>
+                <li>Transform logic &amp; schema mapping to your CRM/ERP</li>
+                <li>Make.com workflow build + error handling</li>
+                <li>Testing, QA, and handoff documentation</li>
+                <li>30-day post-launch integrity monitoring</li>
+              </ul>
+            </div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-scope">
+              Project-based engagement. One defined A-to-B data flow: e.g., email/PDF → CRM record, or web form → ERP
+              order. Timeline: 2–4 weeks depending on complexity.
+            </div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-outcome">
+              One manual process eliminated. One human freed from re-entry. One data flow with guaranteed integrity,
+              full audit trail, and zero redundancy from day one.
+            </div>
+          </td>
+        </tr>
+
+        <!-- Tier 3 -->
+        <tr class="pkg-row">
+          <td class="pkg-cell">
+            <span class="pkg-id">BLUEPRINT-03</span>
+            <span class="pkg-name">THE INTEGRATED ENTERPRISE</span>
+            <span class="pkg-subtitle">Fractional CAIO / CTO Partnership</span>
+            <div><span class="badge-tier badge-enterprise">PARTNERSHIP</span></div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-deliverable">
+              <ul>
+                <li>Ongoing infrastructure architecture &amp; oversight</li>
+                <li>Multiple bridge builds on a defined cadence</li>
+                <li>AI strategy embedded in operations roadmap</li>
+                <li>Systems governance — schema standards &amp; data policy</li>
+                <li>Vendor evaluation &amp; stack rationalization</li>
+                <li>Monthly infrastructure review + reporting</li>
+              </ul>
+            </div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-scope">
+              Monthly retainer. Minimum 3-month engagement. Structured as a fractional executive relationship — I
+              function as your Chief AI Infrastructure Officer, without the full-time overhead.
+            </div>
+          </td>
+          <td class="pkg-cell">
+            <div class="pkg-outcome">
+              A continuously evolving, enterprise-grade data nervous system. Your entire stack moves toward zero
+              redundancy, full integrity, and a single source of truth—permanently.
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="rule">
+
+  <!-- WHY DAN -->
+  <section class="container">
+    <div class="section-header">
+      <span class="section-tag">SECTION 04</span>
+      <h2 class="section-title">WHY DAN?</h2>
+      <span class="section-num">CREDENTIALS SPEC</span>
+    </div>
+
+    <div class="why-dan-grid">
+      <div class="why-cell wide">
+        <blockquote>"I build tools that look like Excel<br>and perform like a <span>skyscraper.</span>"</blockquote>
+      </div>
+
+      <div class="why-cell">
+        <h3>ENGINEERING FIRST. ALWAYS.</h3>
+        <p>Most "AI consultants" learned automation last year. I've spent 25 years designing systems where
+          <strong>precision is non-negotiable</strong>. My background is Civil Engineering and Land Surveying—fields
+          where a 2mm error in a survey cascades into a $400,000 re-pour. I brought that discipline to enterprise web
+          architecture, and I'm bringing it to your data infrastructure. <strong>I don't build toys. I build
+            industrial-grade data infrastructure.</strong></p>
+      </div>
+
+      <div class="why-cell">
+        <h3>EXPERIENCE SCHEMA</h3>
+        <ul class="credentials-list">
+          <li><span class="cred-key">EXPERIENCE</span> 25 years in systems architecture</li>
+          <li><span class="cred-key">BACKGROUND</span> Civil Engineering + Land Surveying</li>
+          <li><span class="cred-key">ENTERPRISE</span> Web architecture, CRM/ERP integration</li>
+          <li><span class="cred-key">AI LAYER</span> Gemini API, semantic parsing, LLM orchestration</li>
+          <li><span class="cred-key">AUTOMATION</span> Make.com, Zapier, n8n, custom pipelines</li>
+          <li><span class="cred-key">DELIVERY MODEL</span> Fractional CTO / CAIO</li>
+          <li><span class="cred-key">BRAND</span> draftingdan.com</li>
+        </ul>
+      </div>
+
+      <div class="why-cell">
+        <h3>THE ENGINEERING DIFFERENCE</h3>
+        <p>A surveyor doesn't estimate where the property line is. A structural engineer doesn't guess at load capacity.
+          And I don't build automation that "probably works." Every pipeline I design has <strong>explicit schema
+            contracts, defined error states, and measurable outcomes</strong>. You get a system with documented
+          specifications—not a black box that runs until it doesn't.</p>
+      </div>
+
+      <div class="why-cell">
+        <h3>NOT A PROMPT ARTIST</h3>
+        <p>The market is flooded with consultants who automate workflows with drag-and-drop tools and call it "AI
+          strategy." That's not what I do. I operate at the architecture layer: <strong>data flow design, semantic
+            schema mapping, payload routing logic, and systems integration</strong>. The result is infrastructure that
+          scales, that you can audit, and that doesn't break when one upstream system changes its field name.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- CTA -->
+  <section class="container" id="audit">
+    <div class="cta-section">
+      <div>
+        <h2>REQUEST A <span>SYSTEMS</span> AUDIT.</h2>
+        <p>The first step is a Structural Audit—a precise diagnostic of where your data infrastructure is failing and
+          what it's costing you. <strong>No pitch deck. No vague roadmap. A written engineering report with findings,
+            fault analysis, and a remediation plan.</strong></p>
+        <p style="margin-top:12px">If your business runs on data that gets entered more than once, the audit will pay
+          for itself in the first week.</p>
+        <p class="cta-schema" style="margin-top:20px">// SCHEMA: request.type = "structural_audit" → payload.destination
+          = "draftingdan.com"</p>
+      </div>
+      <div class="cta-block">
+        <a href="mailto:inquiry@draftingdan.com" class="btn-primary">REQUEST SYSTEMS AUDIT →</a>
+        <a href="https://www.draftingdan.com" class="btn-secondary">↗ VIEW FULL PORTFOLIO</a>
+        <a href="mailto:daniel@draftingdan.com" class="btn-secondary">↗ EMAIL DAN DIRECTLY</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <a href="https://www.draftingdan.com">DRAFTING DAN</a> — SEMANTIC INFRASTRUCTURE &amp; AI BRIDGES</p>
+    <p>DATA ENTERED ONCE. INTEGRITY GUARANTEED. STRUCTURE MATTERS.</p>
+  </footer>
+
+</body>
+
+</html>
