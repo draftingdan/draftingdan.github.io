@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://draftingdan.com/sitemap.xml
