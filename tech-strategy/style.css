@@ -650,19 +650,18 @@ nav {
 }
 
 .investment-label {
-    font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
     color: var(--ink-dim);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    font-family: var(--mono);
 }
 
 .investment-val {
+    font-size: 28px;
     font-family: var(--display);
-    font-size: 24px;
     color: var(--accent);
     line-height: 1;
-    font-weight: 700;
 }
 
 .per-month {
