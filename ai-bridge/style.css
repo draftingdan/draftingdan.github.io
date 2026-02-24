@@ -504,6 +504,12 @@
     }
 
     /* PACKAGES */
+    .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
     .packages-table {
         border: 1px solid var(--border);
         width: 100%;
@@ -635,6 +641,34 @@
         background: rgba(120, 100, 255, 0.12);
         color: #9d8fff;
         border: 1px solid #9d8fff;
+    }
+
+    .pkg-investment {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin: 16px 0;
+    }
+
+    .investment-label {
+        font-size: 9px;
+        color: var(--ink-dim);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-family: var(--mono);
+    }
+
+    .investment-val {
+        font-size: 28px;
+        font-family: var(--display);
+        color: var(--accent);
+        line-height: 1;
+    }
+
+    .per-month {
+        font-size: 14px;
+        color: var(--ink-dim);
+        margin-left: 2px;
     }
 
     .pkg-row.highlight-row .pkg-cell {

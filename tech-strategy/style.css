@@ -530,6 +530,12 @@ nav {
 }
 
 /* PACKAGES */
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
 .packages-table {
     border: 1px solid var(--border);
     width: 100%;
@@ -634,6 +640,36 @@ nav {
     font-family: var(--sans);
     line-height: 1.6;
     font-weight: 500;
+}
+
+.pkg-investment {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 16px 0;
+}
+
+.investment-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.investment-val {
+    font-family: var(--display);
+    font-size: 24px;
+    color: var(--accent);
+    line-height: 1;
+    font-weight: 700;
+}
+
+.per-month {
+    font-size: 14px;
+    color: var(--ink-muted);
+    font-family: var(--mono);
+    margin-left: 2px;
 }
 
 .badge-tier {
