@@ -618,7 +618,7 @@ body::before {
 }
 
 .pkg-investment {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 4px;
     margin: 16px 0;

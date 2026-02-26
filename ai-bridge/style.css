@@ -163,7 +163,7 @@
 
     .hero-data-strip {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         border: 1px solid var(--border);
         max-width: 640px;
     }
@@ -174,6 +174,7 @@
     }
 
     .hero-stat:last-child {
+        display: none;
         border-right: none;
     }
 
@@ -644,7 +645,7 @@
     }
 
     .pkg-investment {
-        display: flex;
+        display: none;
         flex-direction: column;
         gap: 4px;
         margin: 16px 0;
