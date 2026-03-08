@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DraftingDan | Legacy Modernization & Fractional CTO</title>
+  <meta name="description" content="Fractional CTO specializing in legacy system modernization for mid-market companies. Clear diagnosis, phased plans, controlled execution.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="canonical" href="https://draftingdan.com/" />
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://draftingdan.com/">
+  <meta property="og:title" content="DraftingDan | Legacy Modernization & Fractional CTO">
+  <meta property="og:description" content="Fractional CTO specializing in legacy system modernization. Clear diagnosis, phased plans, controlled execution.">
+  <meta property="og:image" content="https://draftingdan.com/ddlogo-bw.png">
+
+  <style>
+    :root {
+      --bg:           #0a0c10;
+      --bg-card:      #0f1218;
+      --bg-elevated:  #141820;
+      --grid-line:    #1e2330;
+      --accent:       #4a9eff;
+      --accent-dim:   #1e3a5f;
+      --accent-glow:  rgba(74,158,255,0.15);
+      --warn:         #ff6b35;
+      --warn-dim:     rgba(255,107,53,0.12);
+      --text-primary: #e8edf5;
+      --text-secondary: #7a8499;
+      --text-muted:   #3d4558;
+      --font-display: 'Syne', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --font-body:    'Inter', sans-serif;
+      --max-w:        1100px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,12,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo img { width: 1.8rem; height: 1.8rem; }
+    .logo span { color: var(--accent); }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-family: var(--font-body);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .btn {
+      display: inline-block;
+      padding: 0.55rem 1.25rem;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 0 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(74,158,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .hero-body {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-body p { margin-bottom: 1rem; }
+    .hero-body p:last-child { margin-bottom: 0; }
+
+    .hero-body strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { position: relative; z-index: 1; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--grid-line);
+      margin: 0;
+    }
+
+    /* ── PROBLEM SECTION ── */
+    #problem {
+      padding: 7rem 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--grid-line);
+      border: 1px solid var(--grid-line);
+      margin-top: 3rem;
+    }
+
+    .problem-item {
+      background: var(--bg-card);
+      padding: 2rem 2rem 2rem 2.5rem;
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .problem-item:hover {
+      background: var(--bg-elevated);
+      border-left-color: var(--warn);
+    }
+
+    .problem-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--warn);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+
+    .problem-item h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .problem-item p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      padding: 7rem 0;
+    }
+
+    .services-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-bottom: 4rem;
+    }
+
+    .journey-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--grid-line);
+    }
+
+    .journey-step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .journey-step:last-child { border-bottom: none; }
+
+    .step-num {
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border-right: 1px solid var(--grid-line);
+      padding: 1.5rem 0;
+    }
+
+    .step-content {
+      padding: 1.5rem;
+      background: var(--bg);
+      transition: background 0.2s;
+    }
+
+    .step-content:hover { background: var(--bg-elevated); }
+
+    .step-phase {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-content p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--grid-line);
+      border: 1px solid var(--grid-line);
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      padding: 2rem;
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover { background: var(--bg-elevated); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: var(--text-primary);
+    }
+
+    .service-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── WHY FRACTIONAL ── */
+    #why {
+      padding: 7rem 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--grid-line);
+      border: 1px solid var(--grid-line);
+      margin-top: 3rem;
+    }
+
+    .why-item {
+      background: var(--bg-card);
+      padding: 2rem;
+    }
+
+    .why-icon {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .why-item h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .why-item p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 7rem 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-sidebar {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .about-name {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--accent);
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .about-title {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .credential-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .credential-list li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+    }
+
+    .credential-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .about-content strong { color: var(--text-primary); font-weight: 500; }
+
+    .about-section-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .edu-item h4 {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-item p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0 !important;
+      line-height: 1.5;
+    }
+
+    .exp-item {
+      margin-bottom: 1.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--grid-line);
+    }
+
+    .exp-item h4 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .exp-item .exp-role {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-item p {
+      font-size: 0.875rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 7rem 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--grid-line);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .contact-inner .section-title { margin-bottom: 1rem; }
+
+    .contact-inner p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .contact-details {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-details a, .contact-details span {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-details a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--grid-line);
+      padding: 1.5rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-inner p {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+
+    .fade-up {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .fade-up:nth-child(1) { animation-delay: 0.1s; }
+    .fade-up:nth-child(2) { animation-delay: 0.25s; }
+    .fade-up:nth-child(3) { animation-delay: 0.4s; }
+    .fade-up:nth-child(4) { animation-delay: 0.55s; }
+    .fade-up:nth-child(5) { animation-delay: 0.7s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .services-header { grid-template-columns: 1fr; gap: 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-sidebar { position: static; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .nav-links .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAV ── -->
+  <header>
+    <nav class="container">
+      <a href="#hero" class="logo">
+        <img src="ddlogo-bw.png" alt="DraftingDan Logo">
+        Drafting<span>Dan</span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem" class="hide-mobile">The Problem</a>
+        <a href="#services" class="hide-mobile">Services</a>
+        <a href="#about" class="hide-mobile">About</a>
+        <a href="#contact" class="btn">Get a Blueprint</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section id="hero">
+      <div class="container">
+        <div class="hero-eyebrow fade-up">Fractional CTO · Legacy Modernization</div>
+        <h1 class="hero-headline fade-up">
+          Most CTOs<br>
+          Build Systems.<br>
+          <em>I Rescue Them.</em><span class="cursor"></span>
+        </h1>
+        <p class="hero-sub fade-up">
+          Fractional CTO specializing in legacy modernization for mid-market companies — where the cost of doing nothing is no longer an option.
+        </p>
+        <div class="hero-body fade-up">
+          <p>You didn't build a bad system. You built the right system for 2012 — and now <strong>everything depends on it and it's starting to crack.</strong></p>
+          <p>The modernization quotes you've received are terrifying. The risk of disruption keeps you up at night. And every month you wait, the problem compounds.</p>
+          <p>With 25 years bridging civil engineering and software architecture, I treat your systems the way a structural engineer treats a building — a clear-eyed assessment of what's load-bearing, what's at risk, and exactly what it takes to modernize <strong>without bringing the roof down.</strong></p>
+          <p>No bloated team. No reckless rewrites. Just a clear diagnosis, a phased plan, and controlled execution.</p>
+        </div>
+        <div class="hero-cta fade-up">
+          <a href="#contact" class="btn btn-primary">Start With a Blueprint →</a>
+          <a href="#services" class="btn">View Services</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROBLEM ── -->
+    <section id="problem">
+      <div class="container">
+        <p class="section-label">The situation</p>
+        <h2 class="section-title">You're not alone.<br>This is exactly where I work.</h2>
+        <p class="section-intro">Most modernization efforts fail not because of bad technology — but because of uncontrolled scope, unclear architecture, and no one translating technical decisions into business outcomes.</p>
+        <div class="problem-grid">
+          <div class="problem-item">
+            <div class="problem-number">01</div>
+            <h3>Your systems are holding growth hostage</h3>
+            <p>Internal tools built years ago are brittle, undocumented, and impossible to change without risk. Every new initiative starts with "but first we have to fix..."</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-number">02</div>
+            <h3>The modernization estimates are unacceptable</h3>
+            <p>You've been handed $500K–$2M quotes with no clear roadmap and no confidence the outcome would justify the risk. There has to be a better way.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-number">03</div>
+            <h3>No senior technical voice in the room</h3>
+            <p>Your developers execute tasks well, but nobody is setting architectural direction or translating technology decisions into business consequences.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-number">04</div>
+            <h3>AI & automation feel out of reach</h3>
+            <p>You know you need to modernize to take advantage of AI — but without a structured, risk-managed path, every proposal feels like a leap of faith.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-number">05</div>
+            <h3>Investor or M&A pressure is mounting</h3>
+            <p>A board member, acquirer, or investor is asking hard technical questions and you don't have an independent, credible architectural perspective to offer.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-number">06</div>
+            <h3>A trigger event just raised the stakes</h3>
+            <p>A key developer left. A major initiative exposed your system's limits. A vendor delivered a shocking estimate. The window to act is narrowing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section id="services">
+      <div class="container">
+        <div class="services-header">
+          <div>
+            <p class="section-label">How I work</p>
+            <h2 class="section-title">A structured path — not a menu of options.</h2>
+            <p class="section-intro">Every engagement follows a disciplined progression. We don't execute before we understand. We don't plan before we assess.</p>
+          </div>
+          <div class="journey-steps">
+            <div class="journey-step">
+              <div class="step-num">01</div>
+              <div class="step-content">
+                <div class="step-phase">Diagnose</div>
+                <h3>Mandatory Stack Assessment</h3>
+                <p>Understand what's load-bearing before we touch anything. Every engagement begins here.</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <div class="step-num">02</div>
+              <div class="step-content">
+                <div class="step-phase">Plan</div>
+                <h3>Architecture Roadmap</h3>
+                <p>A phased, prioritized plan that serves the business — not a wishlist for engineers.</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <div class="step-num">03</div>
+              <div class="step-content">
+                <div class="step-phase">Execute</div>
+                <h3>Controlled Modernization</h3>
+                <p>Phased migration and AI integration with ongoing architectural oversight.</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <div class="step-num">04</div>
+              <div class="step-content">
+                <div class="step-phase">Protect</div>
+                <h3>Technical Due Diligence</h3>
+                <p>Independent inspections for M&A, investment, and board-level accountability.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="services-grid">
+          <a href="/tech-strategy" class="service-card">
+            <div class="service-tag">Diagnose → Plan</div>
+            <h4>Tech Strategy</h4>
+            <p>Mandatory Stack Assessment and long-term Architecture Roadmapping. The foundation every engagement is built on.</p>
+          </a>
+          <a href="/legacy-modernization" class="service-card">
+            <div class="service-tag">Execute — Core Service</div>
+            <h4>Legacy Modernization</h4>
+            <p>AI-accelerated phased migrations with controlled execution. Your systems, modernized — without shutting down the building.</p>
+          </a>
+          <a href="/ai-bridge" class="service-card">
+            <div class="service-tag">Execute — Automation</div>
+            <h4>AI Bridges & Automation</h4>
+            <p>Risk-managed AI integration into existing systems. Deterministic data pipelines built on structural integrity.</p>
+          </a>
+          <a href="/due-diligence" class="service-card">
+            <div class="service-tag">Protect</div>
+            <h4>Technical Due Diligence</h4>
+            <p>Independent technical inspections for M&A and investments. Credible architectural perspective when the stakes are highest.</p>
+          </a>
+          <a href="/team-building" class="service-card">
+            <div class="service-tag">Organizational</div>
+            <h4>Leadership Scaffolding</h4>
+            <p>Engineering culture design and structural audits. Build the team and processes that sustain modernization long-term.</p>
+          </a>
+          <a href="/custom-applications" class="service-card">
+            <div class="service-tag">Build</div>
+            <h4>Enterprise Applications</h4>
+            <p>Custom software built on a foundation of structural integrity — when the architecture demands building, not patching.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WHY FRACTIONAL ── -->
+    <section id="why">
+      <div class="container">
+        <p class="section-label">Why Fractional?</p>
+        <h2 class="section-title">Senior leadership without the full-time overhead.</h2>
+        <p class="section-intro">Most companies at this stage don't need a full-time CTO. They need the right senior voice in the room, when it matters most — without adding another executive headcount.</p>
+        <div class="why-grid">
+          <div class="why-item">
+            <div class="why-icon">[ $ ]</div>
+            <h3>Fraction of the Cost</h3>
+            <p>Access senior architectural leadership without the $300K+ full-time executive cost. Scale my involvement to your current needs and budget.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">[ → ]</div>
+            <h3>Day 1 Clarity</h3>
+            <p>No onboarding runway. I hit the ground running with a rapid assessment of your stack, team bottlenecks, and risk exposure — actionable from the first week.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">[ ↕ ]</div>
+            <h3>Flexible Engagement</h3>
+            <p>5 hours a week for high-level strategy or 20 for deep execution. I adapt to your growth stage, project phase, and what the business actually needs right now.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">[ ⊕ ]</div>
+            <h3>Cross-Industry Insight</h3>
+            <p>25 years across PropTech, Industrial, and Enterprise SaaS. Pattern recognition from multiple industries applied to your specific technical challenge.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">[ ◎ ]</div>
+            <h3>Structural Discipline</h3>
+            <p>A background in civil engineering means I think in load-bearing systems, phased construction, and what happens when you remove a wall without checking if it's structural.</p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">[ ⇄ ]</div>
+            <h3>Business-First Lens</h3>
+            <p>Every technical decision is evaluated against business outcomes. Modernization serves the business — not the other way around.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-sidebar">
+            <p class="section-label">The Architect</p>
+            <div class="about-name">Daniel J. Allen</div>
+            <div class="about-title">MBA, EIT, LSI · Fractional CTO</div>
+            <ul class="credential-list">
+              <li>Legacy Modernization</li>
+              <li>PropTech & Industrial</li>
+              <li>AI & Cloud Strategy</li>
+              <li>Civil + Software Engineering</li>
+            </ul>
+          </div>
+          <div class="about-content">
+            <p>
+              My background is unusual — and deliberately so. <strong>25 years spanning civil engineering and software architecture</strong> gives me a perspective most CTOs simply don't have: the structural discipline to understand what holds a system together before proposing how to change it.
+            </p>
+            <p>
+              I specialize in the problems that sit at the intersection of technical debt and business consequence. The systems that are too important to replace recklessly, too broken to leave alone, and too complex for anyone without genuine architectural experience to navigate safely.
+            </p>
+            <p>
+              I work with <strong>non-technical founders and senior executives</strong> at tech-enabled companies — people who are smart, business-minded, and frustrated by the lack of clarity and direction they're getting from the technology side of their organization.
+            </p>
+            <p>
+              I don't hand you a report and disappear. I partner through diagnosis, planning, and execution — with one objective: <strong>controlled modernization that serves the business.</strong>
+            </p>
+
+            <div class="about-section-title">Education & Certifications</div>
+            <div class="edu-grid">
+              <div class="edu-item">
+                <h4>MS Software Engineering — AI (2026)</h4>
+                <p>Western Governors University</p>
+              </div>
+              <div class="edu-item">
+                <h4>MBA — IT Management (2024)</h4>
+                <p>Western Governors University</p>
+              </div>
+            </div>
+
+            <div class="about-section-title">Experience</div>
+            <div class="exp-item">
+              <h4>DraftingDan, LLC</h4>
+              <div class="exp-role">Fractional CTO</div>
+              <p>Custom CRM solutions and Python integrations for data ingestion. Team mentorship in C#, Python, and SQL. Architecture strategy for mid-market modernization engagements.</p>
+            </div>
+            <div class="exp-item">
+              <h4>Leading Response, Inc</h4>
+              <div class="exp-role">Enterprise Solution Architect</div>
+              <p>Spearheaded mission-critical legacy decision engine modernization. Defined system architecture for new internal applications under strict operational continuity requirements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-inner">
+          <p class="section-label">Start here</p>
+          <h2 class="section-title">Every engagement starts with a Blueprint.</h2>
+          <p>
+            Before we talk scope, team, or timeline — we start with a clear-eyed assessment of where you are, what's load-bearing, and what a responsible path forward actually looks like.
+          </p>
+          <p>
+            If your legacy systems are constraining growth and you're ready for a plan you can trust, let's talk.
+          </p>
+          <a href="mailto:daniel@draftingdan.com" class="btn btn-primary">Start the Conversation →</a>
+          <div class="contact-details">
+            <a href="mailto:daniel@draftingdan.com">daniel@draftingdan.com</a>
+            <span>|</span>
+            <a href="tel:5413750326">(541) 375-0326</a>
+            <span>|</span>
+            <span>Remote · US-based</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <p>© 2025 DraftingDan, LLC · Daniel J. Allen</p>
+        <p>Senior Technical Leadership for Complex Modernization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Typing animation for hero
+    const cursor = document.querySelector('.cursor');
+    // Cursor already visible via CSS animation — no JS needed for basic effect
+
+    // Scroll-triggered fade for sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.problem-item, .service-card, .why-item, .journey-step').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
