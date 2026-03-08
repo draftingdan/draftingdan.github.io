@@ -3,9 +3,9 @@ console.log("DraftingDan System Online");
 const phrases = [
     "Rescue Systems",
     "Modernize Legacy",
-    "Fractional CTO",
-    "Structural Engineering for Software",
-    "High-Impact Leadership"
+    "Bridge the Gap",
+    "Engineer the Roadmap",
+    "Lead the Change"
 ];
 
 const typingElement = document.getElementById('typing-text');
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sequential Journey Highlight with Loop
     const journeyContainer = document.querySelector('.journey-steps');
     const journeySteps = document.querySelectorAll('.journey-step');
-    
+
     if (journeyContainer && journeySteps.length > 0) {
         function runJourneyCycle() {
             // 1. Highlight sequentially
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
             if (targetId === "#") return;
-            
+
             e.preventDefault();
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
