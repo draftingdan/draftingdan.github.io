@@ -375,6 +375,30 @@ nav {
     flex-wrap: wrap;
 }
 
+/* HOSPICE SECTION */
+#hospice {
+    padding: 7rem 0;
+    border-top: 1px solid var(--grid-line);
+    border-bottom: 1px solid var(--grid-line);
+}
+
+.hospice-content {
+    max-width: 700px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+.hospice-content p {
+    margin-bottom: 1.5rem;
+}
+
+.hospice-content strong {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
 /* PROBLEM SECTION */
 #problem {
     padding: 7rem 0;
