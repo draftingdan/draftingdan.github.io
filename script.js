@@ -46,6 +46,31 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(type, 500);
     }
 
+    // Services Dropdown Toggle
+    const navDropdownToggle = document.querySelector('.nav-dropdown-toggle');
+    const navDropdown = document.querySelector('.nav-dropdown');
+
+    if (navDropdownToggle) {
+        navDropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            navDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navDropdown.contains(e.target)) {
+                navDropdown.classList.remove('active');
+            }
+        });
+
+        // Close dropdown when a menu item is clicked
+        document.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navDropdown.classList.remove('active');
+            });
+        });
+    }
+
     // Problem Cards Flip Logic
     document.querySelectorAll('.problem-item').forEach(card => {
         card.addEventListener('click', () => {
